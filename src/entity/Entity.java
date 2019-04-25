@@ -1,11 +1,10 @@
 package entity;
 
-import javafx.scene.layout.StackPane;
+import gui.Block;
 
 public abstract class Entity {
 	public abstract String getIcon();
-	public void render(StackPane block) {
-		
+	public void render(Block block) {
+		block.testLabel.setText("");
 	};
-	
 }

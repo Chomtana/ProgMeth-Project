@@ -1,6 +1,8 @@
 package application;
 
-import controller.TimeController;
+import controller.EventController;
+import entity.Player;
+import gui.GameArea;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,17 +17,20 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import rule.ThreadRule;
  
 public class Main extends Application {
 	TextField Topic;
 	DatePicker Date;
 	TextArea Description;
+	
+	public static GameArea gameArea;
+	public static StackPane eventPane;
 	
     public static void main(String[] args) {
         launch(args);
@@ -118,10 +123,10 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-    	primaryStage.setTitle("MyNote");
+    	primaryStage.setTitle("Ja Boom Mine By InfinityBug");
     	
     	StackPane root = new StackPane();
-    	Scene scene = new Scene(root,270,300);
+    	Scene scene = new Scene(root,600,600);
     	
     	Description = new TextArea();
     	
@@ -135,7 +140,12 @@ public class Main extends Application {
     	div1.getChildren().add(Description);
     	div1.getChildren().add(BottomControl());
     	
-    	root.getChildren().add(div1);
+    	eventPane = new StackPane();
+    	
+    	root.getChildren().add(gameArea = new GameArea());
+    	root.getChildren().add(eventPane);
+    	
+    	new EventController(scene);
     	
     	primaryStage.setScene(scene);
     	primaryStage.show();
@@ -154,6 +164,22 @@ public class Main extends Application {
                 });
             }
         });
+    	
+    	/*new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
+				EventController.performOnLoad();
+			/*}
+		}).start();*/
+    	
     	
     	/*Rule<Long> r = new Rule<Long>() {
 			
