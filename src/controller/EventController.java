@@ -45,7 +45,6 @@ public class EventController {
 	
 	private void registerOnKey() {
     	scene.setOnKeyPressed(e -> {
-    		System.out.println("dassdasda");
     	    if (e.getCode() == KeyCode.A || e.getCode() == KeyCode.LEFT) {
     	        LEFT = true;
     	    } else if (e.getCode() == KeyCode.D || e.getCode() == KeyCode.RIGHT) {

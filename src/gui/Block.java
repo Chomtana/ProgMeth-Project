@@ -20,7 +20,10 @@ public class Block extends StackPane {
 	
 	public Label testLabel = new Label();
 	
-	public Block() {
+	private int row;
+	private int col;
+	
+	public Block(int row,int col) {
 		this.setStyle("-fx-border-width: 1px;");
 		this.setStyle("-fx-border-color: blue;");
 		this.setPrefWidth(WIDTH);
@@ -29,6 +32,9 @@ public class Block extends StackPane {
 		setEntity(null);
 		
 		this.getChildren().add(testLabel);
+		
+		this.row = row;
+		this.col = col;
 	}
 	
 	public Entity getEntity() {
@@ -40,13 +46,25 @@ public class Block extends StackPane {
 		if (entity != null) {
 			this.entity.render(this);
 		} else {
-			this.entity = new NullEntity();
+			this.entity = new NullEntity(getRow(),getCol());
 			this.entity.render(this);
 		}
 	}
 	
 	public void removeEntity() {
 		setEntity(null);
+	}
+	
+	public boolean hasEntity() {
+		return entity!=null && !(entity instanceof NullEntity);
+	}
+	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getCol() {
+		return col;
 	}
 	
 	public void setIcon(String icon) {

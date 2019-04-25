@@ -9,13 +9,13 @@ import gui.Block;
 import javafx.application.Platform;
 import rule.ThreadRule;
 
-public class Zombie extends EnemyMonster {
+public class Boomer extends EnemyMonster {
 	
 	//public static int RADIUS = 15;
 	
 	
 	
-	public Zombie(int row,int col) {
+	public Boomer(int row,int col) {
 		super(row,col);
 	}
 	
@@ -56,7 +56,7 @@ public class Zombie extends EnemyMonster {
 	}
 	
 	public void render(Block b) {
-		b.testLabel.setText("Z");
+		b.testLabel.setText("B");
 	}
 
 }

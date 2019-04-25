@@ -2,6 +2,7 @@ package entity.monster;
 
 import entity.Attackable;
 import entity.Entity;
+import entity.MoveCollideException;
 import entity.MoveOutOfBoundException;
 import entity.Moveable;
 import entity.UnmoveableException;
@@ -17,6 +18,11 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 	
 	private Thread moveThrottle = null;
 	
+	public Monster(int row,int col) {
+		this.currRow = row;
+		this.currCol = col;
+	}
+	
 	public int getRow() {
 		return currRow;
 	}
@@ -28,6 +34,10 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 	public boolean canMoveTo(int row,int col) throws UnmoveableException {
 		if (row < 0 || row >= GameAreaInner.NUM_ROW || col < 0 || col >= GameAreaInner.NUM_COL) {
 			throw new MoveOutOfBoundException();
+		}
+		
+		if (Block.getBlock(row, col).hasEntity()) {
+			throw new MoveCollideException(Block.getBlock(row, col).getEntity());
 		}
 		
 		return true;

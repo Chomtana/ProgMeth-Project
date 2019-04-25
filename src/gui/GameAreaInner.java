@@ -20,7 +20,7 @@ public class GameAreaInner extends GridPane {
 		
 		for(int i = 0;i<NUM_COL;i++) {
 			for (int j = 0;j<NUM_ROW;j++) {
-				Block block = new Block();
+				Block block = new Block(j,i);
 				if (i==0 && j==0) {
 					
 					block.setEntity(Player.mainPlayer);
