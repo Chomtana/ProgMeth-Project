@@ -1,6 +1,7 @@
 package gui;
 
 import application.Main;
+import effect.Effect;
 import entity.Entity;
 import entity.NullEntity;
 import javafx.scene.control.Label;
@@ -23,7 +24,7 @@ public class Block extends StackPane {
 	private int row;
 	private int col;
 	
-	//private boolean hasentity = false;
+	private boolean hasentity = false;
 	
 	public Block(int row,int col) {
 		this.setStyle("-fx-border-width: 1px;");
@@ -47,16 +48,17 @@ public class Block extends StackPane {
 		this.entity = entity;
 		if (entity != null) {
 			this.entity.render(this);
-			//this.hasentity = false;
+			//this.hasentity = true;
 		} else {
 			this.entity = new NullEntity(getRow(),getCol());
 			this.entity.render(this);
-			//this.hasentity = true;
+			//this.hasentity = false;
 		}
 	}
 	
 	public void removeEntity() {
 		setEntity(null);
+		//this.hasentity = false;
 	}
 	
 	public boolean hasEntity() {
@@ -78,5 +80,16 @@ public class Block extends StackPane {
 	
 	public static Block getBlock(int row,int col) {
 		return Main.gameArea.getInner().getBlocks().get(row).get(col);
+	}
+	
+	public void addEffect(Effect e) {
+		Block b = new Block(e.getRow(), e.getCol());
+		e.render(b);
+		this.getChildren().add(b);
+		e.setEffectBlock(b);
+	}
+	
+	public void removeEffect(Effect e) {
+		this.getChildren().remove(e.getEffectBlock());
 	}
 }

@@ -81,6 +81,7 @@ public class SpawnController {
 	
 	void doMoveAI() {
 		ArrayList<EnemyMonster> enemies = Player.mainPlayer.getSurroundingEnemies();
+		if (enemies.size() <= 0) return;
 		EnemyMonster e = enemies.get((new Random()).nextInt(enemies.size()));
 		/*Player p = Player.mainPlayer;
 		int sr = p.getRow();

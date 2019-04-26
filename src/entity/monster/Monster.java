@@ -2,6 +2,7 @@ package entity.monster;
 
 import entity.Attackable;
 import entity.Entity;
+import entity.HasHP;
 import entity.MoveCollideException;
 import entity.MoveOutOfBoundException;
 import entity.Moveable;
@@ -11,7 +12,7 @@ import gui.GameAreaInner;
 import javafx.application.Platform;
 import rule.ThreadRule;
 
-public abstract class Monster extends Entity implements Moveable, Attackable {
+public abstract class Monster extends Entity implements Moveable, Attackable, HasHP {
 
 	protected int currRow;
 	protected int currCol;
@@ -21,6 +22,9 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 	
 	private Thread moveThrottle = null;
 	private ThreadRule<Boolean> bouncer;
+	private Thread attackThrottle = null;
+	
+	private double hp = 10;
 	
 	public Monster(int row,int col) {
 		super(row,col);
@@ -51,16 +55,13 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 	}
 	
 	public boolean canMoveTo(int row,int col) throws UnmoveableException {
-		try {
-			if (row < 0 || row >= GameAreaInner.NUM_ROW || col < 0 || col >= GameAreaInner.NUM_COL) {
-				throw new MoveOutOfBoundException();
-			}
-			
-			if (Block.getBlock(row, col).hasEntity()) {
-				throw new MoveCollideException(Block.getBlock(row, col).getEntity());
-			}
-		} catch (Exception e) {
-			throw new UnmoveableException(e.getMessage());
+		if (row < 0 || row >= GameAreaInner.NUM_ROW || col < 0 || col >= GameAreaInner.NUM_COL) {
+			throw new MoveOutOfBoundException();
+		}
+		
+		if (Block.getBlock(row, col).hasEntity()) {
+			//System.out.println("sdasda");
+			throw new MoveCollideException(Block.getBlock(row, col).getEntity());
 		}
 		
 		return true;
@@ -127,6 +128,10 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 		return 500;
 	}
 	
+	public int getAttackDelay() {
+		return 250;
+	}
+	
 	public void setRow(int row) {
 		this.currRow = row;
 	}
@@ -136,5 +141,53 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 	}
 	
 	
+	public void takeDamage(double damage) {
+		hp -= damage;
+		
+		System.out.println(hp);
+		
+		if (!isAlive()) {
+			kill();
+		}
+	}
+	
+	public double getHP() {
+		return hp;
+	}
+	public void setHP(double hp) {
+		this.hp = hp;
+	}
+	public boolean isAlive() {
+		return hp>0.0;
+	}
+	
+	@Override
+	public void attack(HasHP target) {
+		// TODO Auto-generated method stub
+		if (!canAttack(target)) return;
+			
+		attackThrottle = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					Thread.sleep(getAttackDelay());
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+				}
+			}
+		});
+		attackThrottle.start();
+	}
+
+	@Override
+	public boolean canAttack(HasHP target) {
+		// TODO Auto-generated method stub
+		//System.out.println("xxx");
+		if (attackThrottle!=null) System.out.println(attackThrottle.isAlive());
+		return attackThrottle == null || !attackThrottle.isAlive();
+	}
 
 }

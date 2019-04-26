@@ -3,6 +3,7 @@ package entity.monster;
 import java.util.Random;
 
 import controller.EventController;
+import entity.HasHP;
 import entity.Player;
 import entity.UnmoveableException;
 import gui.Block;
@@ -38,15 +39,15 @@ public class Boomer extends EnemyMonster {
 	};*/
 
 	@Override
-	public void attack() {
+	public void attack(HasHP target) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public boolean canAttack() {
+	public boolean canAttack(HasHP target) {
 		// TODO Auto-generated method stub
-		return false;
+		return super.canAttack(target);
 	}
 
 	@Override

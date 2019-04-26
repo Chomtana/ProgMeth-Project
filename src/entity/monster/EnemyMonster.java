@@ -13,7 +13,7 @@ public abstract class EnemyMonster extends Monster {
 
 	private Direction facing = Direction.UP;
 	
-	protected int moveDelay = 250;
+	protected int moveDelay = 400;
 	private ThreadRule<Boolean> moveAI;
 	
 	public EnemyMonster(int row,int col) {

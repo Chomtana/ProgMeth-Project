@@ -2,8 +2,8 @@ package gui;
 
 import java.util.HashMap;
 
+import effect.TestEffect;
 import entity.Player;
-import entity.UnmoveableException;
 import entity.monster.Zombie;
 import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
@@ -43,6 +43,8 @@ public class GameAreaInner extends GridPane {
 				
 			}
 		});
+		
+		new TestEffect(0,0);
 
 
 		

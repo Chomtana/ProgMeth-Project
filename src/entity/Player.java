@@ -15,22 +15,26 @@ public class Player extends Monster {
 	public static Player mainPlayer = new Player(START_ROW,START_COL);
 	private Direction facing = Direction.UP;
 	
-	protected int moveDelay = 100;
+	protected int moveDelay = 250;
 	
 	public Player(int row,int col) {
 		super(row,col);
 	}
 
 	@Override
-	public void attack() {
+	public void attack(HasHP target) {
 		// TODO Auto-generated method stub
-
+		if (!canAttack(target)) return;
+		
+		target.takeDamage(1);
+		
+		super.attack(target);
 	}
 
 	@Override
-	public boolean canAttack() {
+	public boolean canAttack(HasHP target) {
 		// TODO Auto-generated method stub
-		return true;
+		return super.canAttack(target);
 	}
 
 	@Override
@@ -44,7 +48,15 @@ public class Player extends Monster {
 	}
 	
 	public void handleUnmoveableException(UnmoveableException e) {
-		
+		if (e instanceof MoveCollideException) {
+			MoveCollideException ee = (MoveCollideException) e;
+			System.out.println("dsasdasad");
+			//ee.getWith().kill();
+			Entity target = ee.getWith();
+			if (target instanceof HasHP) {
+				attack((HasHP) target);
+			}
+		}
 	}
 	
 	public void moveLeft() {
