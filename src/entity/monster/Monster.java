@@ -13,14 +13,13 @@ import rule.ThreadRule;
 
 public abstract class Monster extends Entity implements Moveable, Attackable {
 
-	protected int currRow = 0;
-	protected int currCol = 0;
+	protected int currRow;
+	protected int currCol;
 	
 	private Thread moveThrottle = null;
 	
 	public Monster(int row,int col) {
-		this.currRow = row;
-		this.currCol = col;
+		super(row,col);
 	}
 	
 	public int getRow() {
@@ -50,6 +49,9 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 			throw new UnmoveableException("Cannot move to ("+row+","+col+")");
 		}
 		
+		Monster thiss = this;
+		
+		
 		if (moveThrottle == null || !moveThrottle.isAlive()) {
 			int oldRow = currRow;
 			int oldCol = currCol;
@@ -57,14 +59,17 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 			currRow = row;
 			currCol = col;
 			
-			Monster thiss = this;
+			Block.getBlock(oldRow, oldCol).removeEntity();
+			Block.getBlock(currRow, currCol).setEntity(thiss);
+			
+			
 			moveThrottle = new Thread(new Runnable() {
 				
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
 					try {
-						Platform.runLater(new Runnable() {
+						/*Platform.runLater(new Runnable() {
 							
 							@Override
 							public void run() {
@@ -72,7 +77,7 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 								Block.getBlock(oldRow, oldCol).removeEntity();
 								Block.getBlock(currRow, currCol).setEntity(thiss);
 							}
-						});
+						});*/
 
 						Thread.sleep(getMoveDelay());
 					} catch (InterruptedException e) {
@@ -96,6 +101,14 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 
 	public int getMoveDelay() {
 		return 500;
+	}
+	
+	public void setRow(int row) {
+		this.currRow = row;
+	}
+	
+	public void setCol(int col) {
+		this.currCol = col;
 	}
 	
 	

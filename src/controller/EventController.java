@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entity.Player;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 
@@ -74,11 +75,35 @@ public class EventController {
 	}
 	
 	private static ArrayList<Runnable> onLoadRunnable = new ArrayList<Runnable>();
+	private static boolean onLoadRunned = false;
 	public static void onLoad(Runnable r) {
-		onLoadRunnable.add(r);
+		if (!onLoadRunned) {
+			onLoadRunnable.add(r);
+		} else {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					r.run();
+				}
+			});
+		}
 	}
 	
 	public static void performOnLoad() {
-		for(Runnable r: onLoadRunnable) r.run();
+		TimeController.resetCurrentTime();
+		for(Runnable r: onLoadRunnable) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					r.run();
+				}
+			});
+			
+		}
+		onLoadRunned = true;
 	}
 }

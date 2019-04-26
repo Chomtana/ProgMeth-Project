@@ -8,4 +8,8 @@ public class TimeController {
 	public static long getCurrentTime() {
 		return System.currentTimeMillis() - startingTime;
 	}
+	
+	public static void resetCurrentTime() {
+		startingTime = System.currentTimeMillis();
+	}
 }

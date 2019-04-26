@@ -6,7 +6,7 @@ public class NullEntity extends Entity {
 	private int col = 0;
 
 	public NullEntity(int row, int col) {
-		super();
+		super(row,col);
 		this.row = row;
 		this.col = col;
 	}
@@ -27,6 +27,14 @@ public class NullEntity extends Entity {
 	public int getCol() {
 		// TODO Auto-generated method stub
 		return col;
+	}
+	
+	public void setRow(int row) {
+		this.row = row;
+	}
+	
+	public void setCol(int col) {
+		this.col = col;
 	}
 
 }
