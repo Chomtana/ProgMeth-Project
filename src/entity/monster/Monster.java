@@ -16,10 +16,30 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 	protected int currRow;
 	protected int currCol;
 	
+	protected int oldRow = -1;
+	protected int oldCol = -1;
+	
 	private Thread moveThrottle = null;
+	private ThreadRule<Boolean> bouncer;
 	
 	public Monster(int row,int col) {
 		super(row,col);
+		Monster thiss = this;
+		/*bouncer = new ThreadRule<Boolean>() {
+			
+			@Override
+			public void onChange(Boolean curr, Boolean prev) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public Boolean get() {
+				// TODO Auto-generated method stub
+				Block.getBlock(oldRow, oldCol).setEntity(thiss);
+				return null;
+			}
+		};*/
 	}
 	
 	public int getRow() {
@@ -31,12 +51,16 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 	}
 	
 	public boolean canMoveTo(int row,int col) throws UnmoveableException {
-		if (row < 0 || row >= GameAreaInner.NUM_ROW || col < 0 || col >= GameAreaInner.NUM_COL) {
-			throw new MoveOutOfBoundException();
-		}
-		
-		if (Block.getBlock(row, col).hasEntity()) {
-			throw new MoveCollideException(Block.getBlock(row, col).getEntity());
+		try {
+			if (row < 0 || row >= GameAreaInner.NUM_ROW || col < 0 || col >= GameAreaInner.NUM_COL) {
+				throw new MoveOutOfBoundException();
+			}
+			
+			if (Block.getBlock(row, col).hasEntity()) {
+				throw new MoveCollideException(Block.getBlock(row, col).getEntity());
+			}
+		} catch (Exception e) {
+			throw new UnmoveableException(e.getMessage());
 		}
 		
 		return true;
@@ -53,8 +77,8 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 		
 		
 		if (moveThrottle == null || !moveThrottle.isAlive()) {
-			int oldRow = currRow;
-			int oldCol = currCol;
+			oldRow = currRow;
+			oldCol = currCol;
 			
 			currRow = row;
 			currCol = col;
@@ -69,15 +93,15 @@ public abstract class Monster extends Entity implements Moveable, Attackable {
 				public void run() {
 					// TODO Auto-generated method stub
 					try {
-						/*Platform.runLater(new Runnable() {
+						Platform.runLater(new Runnable() {
 							
 							@Override
 							public void run() {
 								// TODO Auto-generated method stub
-								Block.getBlock(oldRow, oldCol).removeEntity();
-								Block.getBlock(currRow, currCol).setEntity(thiss);
+								//Block.getBlock(oldRow, oldCol).removeEntity();
+								//Block.getBlock(currRow, currCol).setEntity(thiss);
 							}
-						});*/
+						});
 
 						Thread.sleep(getMoveDelay());
 					} catch (InterruptedException e) {

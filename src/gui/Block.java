@@ -23,6 +23,8 @@ public class Block extends StackPane {
 	private int row;
 	private int col;
 	
+	//private boolean hasentity = false;
+	
 	public Block(int row,int col) {
 		this.setStyle("-fx-border-width: 1px;");
 		this.setStyle("-fx-border-color: blue;");
@@ -45,9 +47,11 @@ public class Block extends StackPane {
 		this.entity = entity;
 		if (entity != null) {
 			this.entity.render(this);
+			//this.hasentity = false;
 		} else {
 			this.entity = new NullEntity(getRow(),getCol());
 			this.entity.render(this);
+			//this.hasentity = true;
 		}
 	}
 	
@@ -57,6 +61,7 @@ public class Block extends StackPane {
 	
 	public boolean hasEntity() {
 		return entity!=null && !(entity instanceof NullEntity);
+		//return hasentity;
 	}
 	
 	public int getRow() {

@@ -1,7 +1,11 @@
 package entity;
 
+import java.util.ArrayList;
+
+import entity.monster.EnemyMonster;
 import entity.monster.Monster;
 import gui.Block;
+import gui.GameAreaInner;
 
 public class Player extends Monster {
 	
@@ -85,6 +89,26 @@ public class Player extends Monster {
 
 	public void setFacing(Direction facing) {
 		this.facing = facing;
+	}
+	
+	public ArrayList<EnemyMonster> getSurroundingEnemies() {
+		ArrayList<EnemyMonster> res = new ArrayList<EnemyMonster>();
+		
+		Player p = this;
+		int sr = p.getRow();
+		int sc = p.getCol();
+		
+		for(int i = sr-15;i<=sr+15;i++) {
+			for (int j = sc-15;j<=sc+15;j++) {
+				if (i<0 || j<0 || i>=GameAreaInner.NUM_ROW || j>=GameAreaInner.NUM_COL) continue;
+				Entity ee = Block.getBlock(i, j).getEntity();
+				if (!(ee instanceof EnemyMonster)) continue;
+				EnemyMonster e = (EnemyMonster) ee;
+				res.add(e);
+			}
+		}
+		
+		return res;
 	}
 
 }

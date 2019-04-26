@@ -14,32 +14,26 @@ public abstract class EnemyMonster extends Monster {
 	private Direction facing = Direction.UP;
 	
 	protected int moveDelay = 250;
-	
-	public void moveAI() {
-		int rDist = Math.abs(Player.mainPlayer.getRow() - getRow());
-		int cDist = Math.abs(Player.mainPlayer.getCol() - getCol());
-		int distance = rDist + cDist;
-		if (distance==0) return;
-		int rDir = 0;
-		int cDir = 0;
-		
-		if (Player.mainPlayer.getRow() < getRow()) rDir = -1;
-		else if (Player.mainPlayer.getRow() > getRow()) rDir = 1;
-		
-		if (Player.mainPlayer.getCol() < getCol()) cDir = -1;
-		else if (Player.mainPlayer.getCol() > getCol()) cDir = 1;
-		
-		int rand = (new Random()).nextInt(distance);
-
-		if (rand < rDist) {
-			moveTo(getRow()+rDir,getCol());
-		} else {
-			moveTo(getRow(),getCol()+cDir);
-		}
-	}
+	private ThreadRule<Boolean> moveAI;
 	
 	public EnemyMonster(int row,int col) {
 		super(row,col);
+		moveAI = new ThreadRule<Boolean>() {
+			
+			@Override
+			public void onChange(Boolean curr, Boolean prev) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public Boolean get() {
+				// TODO Auto-generated method stub
+
+				
+				return null;
+			}
+		};
 	}
 	
 	public void handleUnmoveableException(UnmoveableException e) {

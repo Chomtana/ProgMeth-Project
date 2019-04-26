@@ -1,15 +1,17 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-import entity.Entity;
 import entity.Player;
 import entity.monster.Boomer;
 import entity.monster.EnemyMonster;
 import entity.monster.Zombie;
 import gui.Block;
 import gui.GameAreaInner;
-import javafx.application.Platform;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import rule.ThreadRule;
 
 public class SpawnController {
@@ -65,27 +67,64 @@ public class SpawnController {
 		public Boolean get() {
 			// TODO Auto-generated method stub
 			
-			Player p = Player.mainPlayer;
-			int sr = p.getRow();
-			int sc = p.getCol();
+
 			
-			for(int i = sr-spawnRadius;i<=sr+spawnRadius;i++) {
-				for (int j = sc-spawnRadius;j<=sc+spawnRadius;j++) {
-					if (i<0 || j<0 || i>=GameAreaInner.NUM_ROW || j>=GameAreaInner.NUM_COL) continue;
-					Entity b = Block.getBlock(i,j).getEntity();
-					if (b instanceof EnemyMonster) {
-						((EnemyMonster) b).moveAI();
-						return null;
-					}
-					
-				}
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return null;
 		}
 	};
 	
-	public SpawnController() {
+	void doMoveAI() {
+		ArrayList<EnemyMonster> enemies = Player.mainPlayer.getSurroundingEnemies();
+		EnemyMonster e = enemies.get((new Random()).nextInt(enemies.size()));
+		/*Player p = Player.mainPlayer;
+		int sr = p.getRow();
+		int sc = p.getCol();
 		
+		for(int i = sr-spawnRadius;i<=sr+spawnRadius;i++) {
+			for (int j = sc-spawnRadius;j<=sc+spawnRadius;j++) {
+				if (i<0 || j<0 || i>=GameAreaInner.NUM_ROW || j>=GameAreaInner.NUM_COL) continue;
+				Entity ee = Block.getBlock(i, j).getEntity();
+				if (!(ee instanceof EnemyMonster)) continue;
+				EnemyMonster e = (EnemyMonster) ee;*/
+				
+				int rDist = Math.abs(Player.mainPlayer.getRow() - e.getRow());
+				int cDist = Math.abs(Player.mainPlayer.getCol() - e.getCol());
+				int distance = rDist + cDist;
+				if (distance==0) return;
+				int rDir = 0;
+				int cDir = 0;
+				
+				if (Player.mainPlayer.getRow() < e.getRow()) rDir = -1;
+				else if (Player.mainPlayer.getRow() > e.getRow()) rDir = 1;
+				
+				if (Player.mainPlayer.getCol() < e.getCol()) cDir = -1;
+				else if (Player.mainPlayer.getCol() > e.getCol()) cDir = 1;
+				
+				int rand = (new Random()).nextInt(distance);
+		
+				if (rand < rDist) {
+					e.moveTo(e.getRow()+rDir,e.getCol());
+				} else {
+					e.moveTo(e.getRow(),e.getCol()+cDir);
+				}
+				
+				/*return;
+			}
+		}*/
+	}
+	
+	public SpawnController() {
+		Timeline moveAI = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+			doMoveAI();
+		}));
+		moveAI.setCycleCount(Timeline.INDEFINITE);
+		moveAI.play();
 	}
 	
 	private void spawn() {
