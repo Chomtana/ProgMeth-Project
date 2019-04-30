@@ -1,7 +1,10 @@
 package gui;
 
 import java.util.HashMap;
+import java.util.Random;
 
+import application.Main;
+import controller.EventController;
 import effect.TestEffect;
 import entity.Player;
 import entity.monster.Zombie;
@@ -46,6 +49,25 @@ public class GameAreaInner extends GridPane {
 		
 		new TestEffect(0,0);
 
+		EventController.onLoad(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				for(int i = 0;i<NUM_ROW;i++) {
+					for (int j = 0;j<NUM_COL;j++) {
+						if (!Block.getBlock(i, j).hasEntity()) {
+							if (Main.random.nextInt(100) < 50) {
+								new Zombie(i,j);
+							}
+						}
+					}
+				}
+				
+				
+			}
+		});
 
 		
 		//this.setPrefWidth(270);

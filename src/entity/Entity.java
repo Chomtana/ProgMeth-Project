@@ -3,6 +3,7 @@ package entity;
 import controller.EventController;
 import effect.Effect;
 import gui.Block;
+import javafx.application.Platform;
 
 public abstract class Entity {
 	protected boolean isAlive = true;
@@ -57,10 +58,19 @@ public abstract class Entity {
 	
 	public void kill() {
 		isAlive = false;
+		Entity thiss = this;
 		if (!(this instanceof Effect)) {
 			Block.getBlock(getRow(), getCol()).removeEntity();
 		} else {
-			Block.getBlock(getRow(), getCol()).removeEffect((Effect) this); 
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					Block.getBlock(getRow(), getCol()).removeEffect((Effect) thiss); 
+				}
+			});
+			
 		}
 	}
 }

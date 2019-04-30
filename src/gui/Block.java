@@ -90,6 +90,10 @@ public class Block extends StackPane {
 	}
 	
 	public void removeEffect(Effect e) {
+		int sizeb = this.getChildren().size();
+		
 		this.getChildren().remove(e.getEffectBlock());
+		//System.out.println("Remove effect "+e.getClass().getName()+ " "+sizeb+" "+this.getChildren().size());
+		//System.out.println(this.getChildren().contains(e.getEffectBlock()));
 	}
 }

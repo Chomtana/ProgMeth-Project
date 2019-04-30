@@ -1,5 +1,7 @@
 package application;
 
+import java.util.Random;
+
 import controller.EventController;
 import controller.SpawnController;
 import gui.GameArea;
@@ -30,6 +32,7 @@ public class Main extends Application {
 	
 	public static GameArea gameArea;
 	public static StackPane eventPane;
+	public static Random random = new Random();
 	
     public static void main(String[] args) {
         launch(args);

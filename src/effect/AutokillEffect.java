@@ -1,5 +1,6 @@
 package effect;
 
+import controller.EventController;
 import entity.Entity;
 
 public abstract class AutokillEffect extends Effect {
@@ -10,21 +11,30 @@ public abstract class AutokillEffect extends Effect {
 	public AutokillEffect(int row,int col,int duration) {
 		super(row,col);
 		this.duration = duration;
-		autokillTimer = new Thread(new Runnable() {
+		EventController.onLoad(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				try {
-					Thread.sleep(duration);
-					kill();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					kill();
-				}
+				autokillTimer = new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							Thread.sleep(duration);
+							kill();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+							kill();
+						}
+					}
+				});
+				autokillTimer.start();
 			}
 		});
+
 	}
 
 	public int getDuration() {

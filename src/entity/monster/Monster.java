@@ -186,7 +186,7 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 	public boolean canAttack(HasHP target) {
 		// TODO Auto-generated method stub
 		//System.out.println("xxx");
-		if (attackThrottle!=null) System.out.println(attackThrottle.isAlive());
+		//if (attackThrottle!=null) System.out.println(attackThrottle.isAlive());
 		return attackThrottle == null || !attackThrottle.isAlive();
 	}
 

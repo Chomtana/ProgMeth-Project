@@ -50,7 +50,7 @@ public class Player extends Monster {
 	public void handleUnmoveableException(UnmoveableException e) {
 		if (e instanceof MoveCollideException) {
 			MoveCollideException ee = (MoveCollideException) e;
-			System.out.println("dsasdasad");
+			//System.out.println("dsasdasad");
 			//ee.getWith().kill();
 			Entity target = ee.getWith();
 			if (target instanceof HasHP) {

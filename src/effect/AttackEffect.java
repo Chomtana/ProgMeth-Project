@@ -2,10 +2,10 @@ package effect;
 
 import entity.Entity;
 
-public class TestEffect extends AutokillEffect {
+public class AttackEffect extends AutokillEffect {
 
-	public TestEffect(int row, int col) {
-		super(row, col,5000);
+	public AttackEffect(int row, int col) {
+		super(row, col,100);
 		// TODO Auto-generated constructor stub
 	}
 
