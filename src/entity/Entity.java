@@ -8,6 +8,9 @@ import javafx.application.Platform;
 public abstract class Entity {
 	protected boolean isAlive = true;
 	
+	protected int currRow;
+	protected int currCol;
+	
 	public Entity() {
 		Entity thiss = this;
 		if (!(thiss instanceof Effect)) {
@@ -47,10 +50,20 @@ public abstract class Entity {
 	public void render(Block block) {
 		block.testLabel.setText("");
 	};
-	public abstract int getRow();
-	public abstract int getCol();
-	public abstract void setRow(int row);
-	public abstract void setCol(int col);
+	public int getRow() {
+		return currRow;
+	}
+	
+	public int getCol() {
+		return currCol;
+	}
+	public void setRow(int row) {
+		this.currRow = row;
+	}
+	
+	public void setCol(int col) {
+		this.currCol = col;
+	}
 	
 	public boolean getIsAlive() {
 		return isAlive;
@@ -72,5 +85,9 @@ public abstract class Entity {
 			});
 			
 		}
+	}
+	
+	public Block getBlock() {
+		return Block.getBlock(getRow(), getCol());
 	}
 }

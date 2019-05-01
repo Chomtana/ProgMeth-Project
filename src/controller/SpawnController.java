@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Random;
 
+import application.Main;
 import entity.Player;
 import entity.monster.Boomer;
 import entity.monster.EnemyMonster;
@@ -19,7 +20,7 @@ public class SpawnController {
 	public static double spawnDelayStart = 5000;
 	public static int spawnRadius = 6;
 	
-	private ThreadRule<Boolean> spawnRule = new ThreadRule<Boolean>() {
+	/*private ThreadRule<Boolean> spawnRule = new ThreadRule<Boolean>() {
 		
 		@Override
 		public void onChange(Boolean curr, Boolean prev) {
@@ -77,7 +78,7 @@ public class SpawnController {
 			}
 			return null;
 		}
-	};
+	};*/
 	
 	void doMoveAI() {
 		ArrayList<EnemyMonster> enemies = Player.mainPlayer.getSurroundingEnemies();
@@ -126,21 +127,30 @@ public class SpawnController {
 		}));
 		moveAI.setCycleCount(Timeline.INDEFINITE);
 		moveAI.play();
+		
+		Timeline spawnAI = new Timeline(new KeyFrame(Duration.millis(spawnDelayStart), e -> {
+			spawn();
+		}));
+		spawnAI.setCycleCount(Timeline.INDEFINITE);
+		spawnAI.play();
 	}
 	
 	private void spawn() {
 		Player p = Player.mainPlayer;
 		int sr = p.getRow();
 		int sc = p.getCol();
-		Random random = new Random();
+		Random random = Main.random;
 		System.out.println("Spawn");
 		
 		int loopcount = 100;
 		
 		while(loopcount-- > 0) {
-			int r = random.nextInt(spawnRadius*2+1)-spawnRadius;
-			int c = random.nextInt(spawnRadius*2+1)-spawnRadius;
-			if (r<0 || c<0 || r>=GameAreaInner.NUM_ROW || c>=GameAreaInner.NUM_COL) continue;
+			int r = -1;
+			int c = -1;
+			while (r<0 || c<0 || r>=GameAreaInner.NUM_ROW || c>=GameAreaInner.NUM_COL) {
+				r = sr + random.nextInt(spawnRadius*2+1)-spawnRadius;
+				c = sc + random.nextInt(spawnRadius*2+1)-spawnRadius;
+			}
 			if (Block.getBlock(r, c).hasEntity()) {
 				continue;
 			}

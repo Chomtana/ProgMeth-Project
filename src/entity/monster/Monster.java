@@ -13,9 +13,6 @@ import javafx.application.Platform;
 import rule.ThreadRule;
 
 public abstract class Monster extends Entity implements Moveable, Attackable, HasHP {
-
-	protected int currRow;
-	protected int currCol;
 	
 	protected int oldRow = -1;
 	protected int oldCol = -1;
@@ -44,14 +41,6 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 				return null;
 			}
 		};*/
-	}
-	
-	public int getRow() {
-		return currRow;
-	}
-	
-	public int getCol() {
-		return currCol;
 	}
 	
 	public boolean canMoveTo(int row,int col) throws UnmoveableException {
@@ -130,14 +119,6 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 	
 	public int getAttackDelay() {
 		return 250;
-	}
-	
-	public void setRow(int row) {
-		this.currRow = row;
-	}
-	
-	public void setCol(int col) {
-		this.currCol = col;
 	}
 	
 	

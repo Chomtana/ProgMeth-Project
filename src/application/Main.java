@@ -2,6 +2,7 @@ package application;
 
 import java.util.Random;
 
+import controller.CameraController;
 import controller.EventController;
 import controller.SpawnController;
 import gui.GameArea;
@@ -33,6 +34,7 @@ public class Main extends Application {
 	public static GameArea gameArea;
 	public static StackPane eventPane;
 	public static Random random = new Random();
+	public static CameraController cameraController;
 	
     public static void main(String[] args) {
         launch(args);
@@ -173,6 +175,7 @@ public class Main extends Application {
 			public void run() {
 				// TODO Auto-generated method stub
 				new SpawnController();
+				cameraController = new CameraController();
 			}
 		});
     	
@@ -190,6 +193,8 @@ public class Main extends Application {
 				EventController.performOnLoad();
 			}
 		}).start();
+    	
+    	
     	
     	
     	/*Rule<Long> r = new Rule<Long>() {

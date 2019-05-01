@@ -14,8 +14,8 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 
 public class Block extends StackPane {
-	private int WIDTH = 30;
-	private int HEIGHT = 30;
+	public static int WIDTH = 30;
+	public static int HEIGHT = 30;
 	
 	private Entity entity;
 	

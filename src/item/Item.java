@@ -1,4 +1,4 @@
-package entity.item;
+package item;
 
 import entity.Entity;
 import entity.Pickable;

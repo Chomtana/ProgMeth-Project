@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 
+import application.Main;
 import entity.monster.EnemyMonster;
 import entity.monster.Monster;
 import gui.Block;
@@ -82,7 +83,16 @@ public class Player extends Monster {
 	@Override
 	public boolean moveTo(int row,int col) {
 		try {
-			return super.moveTo(row, col);
+			if (super.moveTo(row, col)) {
+				try {
+					Main.cameraController.performSetCenter();
+				} catch (NullPointerException e) {
+					
+				}
+				return true;
+			} else {
+				return false;
+			}
 		} catch (UnmoveableException e) {
 			// TODO Auto-generated catch block
 			handleUnmoveableException(e);

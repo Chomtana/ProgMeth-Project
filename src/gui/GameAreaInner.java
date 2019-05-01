@@ -1,25 +1,27 @@
 package gui;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import application.Main;
 import controller.EventController;
 import effect.TestEffect;
 import entity.Player;
 import entity.monster.Zombie;
+import entity.ore.Coal;
+import entity.ore.Diamond;
+import entity.ore.Iron;
 import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
 
 public class GameAreaInner extends GridPane
 {
 
-	public static int NUM_COL = 50;
-	public static int NUM_ROW = 50;
+	public static int NUM_COL = 100;
+	public static int NUM_ROW = 100;
 	private HashMap<Integer, HashMap<Integer, Block>> blocks = new HashMap<Integer, HashMap<Integer, Block>>();
-	private boolean isDiamondOre[][] = new boolean[NUM_ROW][NUM_COL];
-	private boolean isIronOre[][] = new boolean[NUM_ROW][NUM_COL];
-	private boolean isCoalOre[][] = new boolean[NUM_ROW][NUM_COL];
+	private boolean[][] isDiamondOre = new boolean[NUM_ROW][NUM_COL];
+	private boolean[][] isIronOre = new boolean[NUM_ROW][NUM_COL];
+	private boolean[][] isCoalOre = new boolean[NUM_ROW][NUM_COL];
 	private int dirI[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
 	private int dirJ[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
@@ -80,12 +82,12 @@ public class GameAreaInner extends GridPane
 						int nowRow = Main.random.nextInt(25) + i;
 						int nowCol = Main.random.nextInt(25) + j;
 						isDiamondOre[nowRow][nowCol] = true;
-						
+
 						for (int k = 0; k < 8; k++)
 						{
 							int nextRow = nowRow + dirI[k];
 							int nextCol = nowCol + dirJ[k];
-							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= nextCol)
+							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= NUM_COL)
 								continue;
 							if (Main.random.nextInt(2) == 1)
 								isDiamondOre[nextRow][nextCol] = true;
@@ -103,29 +105,68 @@ public class GameAreaInner extends GridPane
 						int nowRow = Main.random.nextInt(20) + i;
 						int nowCol = Main.random.nextInt(20) + j;
 						isIronOre[nowRow][nowCol] = true;
-						
+
 						int temp = Main.random.nextInt(8);
+						while (nowRow + dirI[temp] < 0 || nowRow + dirI[temp] >= NUM_ROW || nowCol + dirJ[temp] < 0
+								|| nowCol + dirJ[temp] >= NUM_COL)
+							temp = Main.random.nextInt(8);
 						int tempRow = nowRow + dirI[temp];
 						int tempCol = nowCol + dirJ[temp];
 						isIronOre[tempRow][tempCol] = true;
-						
+
 						for (int k = 0; k < 8; k++)
 						{
 							int nextRow = nowRow + dirI[k];
 							int nextCol = nowCol + dirJ[k];
-							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= nextCol)
+							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= NUM_COL)
 								continue;
 							if (Main.random.nextInt(2) == 1)
 								isIronOre[nextRow][nextCol] = true;
 							else
 								isIronOre[nextRow][nextCol] |= false;
 						}
-						
+
 						for (int k = 0; k < 8; k++)
 						{
 							int nextRow = tempRow + dirI[k];
 							int nextCol = tempCol + dirJ[k];
-							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= nextCol)
+							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= NUM_COL)
+								continue;
+							if (Main.random.nextInt(2) == 1)
+								isIronOre[nextRow][nextCol] = true;
+							else
+								isIronOre[nextRow][nextCol] |= false;
+						}
+
+						nowRow = Main.random.nextInt(20) + i;
+						nowCol = Main.random.nextInt(20) + j;
+						isIronOre[nowRow][nowCol] = true;
+
+						temp = Main.random.nextInt(8);
+						while (nowRow + dirI[temp] < 0 || nowRow + dirI[temp] >= NUM_ROW || nowCol + dirJ[temp] < 0
+								|| nowCol + dirJ[temp] >= NUM_COL)
+							temp = Main.random.nextInt(8);
+						tempRow = nowRow + dirI[temp];
+						tempCol = nowCol + dirJ[temp];
+						isIronOre[tempRow][tempCol] = true;
+
+						for (int k = 0; k < 8; k++)
+						{
+							int nextRow = nowRow + dirI[k];
+							int nextCol = nowCol + dirJ[k];
+							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= NUM_COL)
+								continue;
+							if (Main.random.nextInt(2) == 1)
+								isIronOre[nextRow][nextCol] = true;
+							else
+								isIronOre[nextRow][nextCol] |= false;
+						}
+
+						for (int k = 0; k < 8; k++)
+						{
+							int nextRow = tempRow + dirI[k];
+							int nextCol = tempCol + dirJ[k];
+							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= NUM_COL)
 								continue;
 							if (Main.random.nextInt(2) == 1)
 								isIronOre[nextRow][nextCol] = true;
@@ -142,19 +183,33 @@ public class GameAreaInner extends GridPane
 					{
 						int nowRow = Main.random.nextInt(10) + i;
 						int nowCol = Main.random.nextInt(10) + j;
-						isDiamondOre[nowRow][nowCol] = true;
-						
+						isCoalOre[nowRow][nowCol] = true;
+
 						for (int k = 0; k < 8; k++)
 						{
 							int nextRow = nowRow + dirI[k];
 							int nextCol = nowCol + dirJ[k];
-							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= nextCol)
+							if (nextRow < 0 || nextCol < 0 || nextRow >= NUM_ROW || nextCol >= NUM_COL)
 								continue;
 							if (Main.random.nextInt(2) == 1)
-								isDiamondOre[nextRow][nextCol] = true;
+								isCoalOre[nextRow][nextCol] = true;
 							else
-								isDiamondOre[nextRow][nextCol] |= false;
+								isCoalOre[nextRow][nextCol] |= false;
 						}
+					}
+				}
+
+				// Display it
+				for (int i = 0; i < NUM_ROW; i++)
+				{
+					for (int j = 0; j < NUM_COL; j++)
+					{
+						if (isDiamondOre[i][j])
+							new Diamond(i, j);
+						else if (isIronOre[i][j])
+							new Iron(i, j);
+						else if (isCoalOre[i][j])
+							new Coal(i, j);
 					}
 				}
 
