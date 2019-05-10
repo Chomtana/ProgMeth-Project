@@ -12,10 +12,11 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 public class Block extends StackPane {
-	public static int WIDTH = 30;
-	public static int HEIGHT = 30;
+	public static int WIDTH = 50;
+	public static int HEIGHT = 50;
 	
 	private Entity entity;
 	
@@ -27,12 +28,14 @@ public class Block extends StackPane {
 	private boolean hasentity = false;
 	
 	public Block(int row,int col) {
-		this.setStyle("-fx-border-width: 1px;");
-		this.setStyle("-fx-border-color: blue;");
+		//this.setStyle("-fx-border-width: 1px;");
+		//this.setStyle("-fx-border-color: blue;");
 		this.setPrefWidth(WIDTH);
 		this.setPrefHeight(HEIGHT);
 		
 		setEntity(null);
+		
+		testLabel.setTextFill(Color.web("#FFFFFF"));
 		
 		this.getChildren().add(testLabel);
 		

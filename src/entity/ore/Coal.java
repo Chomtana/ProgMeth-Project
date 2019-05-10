@@ -1,6 +1,7 @@
 package entity.ore;
 
 import gui.Block;
+import gui.ImageStore;
 
 public class Coal extends Ore
 {
@@ -17,11 +18,7 @@ public class Coal extends Ore
 	@Override
 	public String getIcon() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void render(Block b) {
-		b.testLabel.setText("C");
+		return ImageStore.getInstance().coalBlock;
 	}
 
 	@Override

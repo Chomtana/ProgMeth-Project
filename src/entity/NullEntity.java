@@ -1,5 +1,7 @@
 package entity;
 
+import gui.Block;
+
 public class NullEntity extends Entity {
 	
 	private int row = 0;
@@ -35,6 +37,11 @@ public class NullEntity extends Entity {
 	
 	public void setCol(int col) {
 		this.col = col;
+	}
+	
+	public void render(Block b) {
+		b.testLabel.setText("");
+		b.setStyle("-fx-background: none;");
 	}
 
 }

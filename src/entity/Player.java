@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import application.Main;
 import effect.AttackEffect;
+import effect.BombEffect;
 import entity.monster.EnemyMonster;
 import entity.monster.Monster;
 import gui.Block;
@@ -23,6 +24,8 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	private double hp = 100;
 	private double armor = 0;
 	private double atkDamage = 5;
+	private double bombDamage = 10;
+	private int bombRadius = 5;
 	
 	public Player(int row,int col) {
 		super(row,col);
@@ -71,6 +74,10 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 		} catch (NullPointerException e) {
 			
 		}
+	}
+	
+	public void bomb() {
+		new BombEffect(getRow(),getCol(),bombDamage,bombRadius);
 	}
 
 	@Override
@@ -186,6 +193,34 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 		this.armor = armor;
 	}
 	
+	
+	
+	public double getAtkDamage() {
+		return atkDamage;
+	}
+
+	public void setAtkDamage(double atkDamage) {
+		this.atkDamage = atkDamage;
+	}
+
+	public double getBombDamage() {
+		return bombDamage;
+	}
+
+	public void setBombDamage(double bombDamage) {
+		this.bombDamage = bombDamage;
+	}
+	
+	
+
+	public int getBombRadius() {
+		return bombRadius;
+	}
+
+	public void setBombRadius(int bombRadius) {
+		this.bombRadius = bombRadius;
+	}
+
 	@Override
 	public double takePhysicalDamage(double damage) {
 		// TODO Auto-generated method stub

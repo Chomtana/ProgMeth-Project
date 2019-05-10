@@ -3,7 +3,14 @@ package entity;
 import controller.EventController;
 import effect.Effect;
 import gui.Block;
+import gui.ImageStore;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 
 public abstract class Entity {
 	protected boolean isAlive = true;
@@ -49,6 +56,18 @@ public abstract class Entity {
 	public abstract String getIcon();
 	public void render(Block block) {
 		block.testLabel.setText("");
+		//block.setBackground(new Background(new BackgroundImage(new Image(ImageStore.getInstance().blockBG), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+		String icon = getIcon();
+		if (icon != null && icon != "") {
+			block.setStyle(
+		            "-fx-background-image: url(" +
+		            		icon +
+		            "); " +
+		            "-fx-background-size: 100%, 100%;"
+		        );
+		} else {
+			block.setStyle("-fx-background: none;");
+		}
 	};
 	public int getRow() {
 		return currRow;

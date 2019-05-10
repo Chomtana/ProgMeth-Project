@@ -1,6 +1,7 @@
 package entity.ore;
 
 import gui.Block;
+import gui.ImageStore;
 
 public class Diamond extends Ore
 {
@@ -17,11 +18,7 @@ public class Diamond extends Ore
 	@Override
 	public String getIcon() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void render(Block b) {
-		b.testLabel.setText("D");
+		return ImageStore.getInstance().diamondBlock;
 	}
 
 	@Override

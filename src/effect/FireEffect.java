@@ -1,19 +1,20 @@
 package effect;
 
+import entity.CanTakeBombDamage;
 import entity.CanTakePhysicalDamage;
 import entity.Entity;
 
-public class AttackEffect extends AutokillEffect {
+public class FireEffect extends AutokillEffect {
 	
 	private double atkDamage;
 	
-	public AttackEffect(Entity e, double atkDamage) {
+	public FireEffect(Entity e, double atkDamage) {
 		this(e.getRow(), e.getCol(), atkDamage);
 		// TODO Auto-generated constructor stub
 	}
 
-	public AttackEffect(int row, int col, double atkDamage) {
-		super(row, col,200);
+	public FireEffect(int row, int col, double atkDamage) {
+		super(row, col,300);
 		this.atkDamage = atkDamage;
 		// TODO Auto-generated constructor stub
 	}
@@ -21,8 +22,8 @@ public class AttackEffect extends AutokillEffect {
 	@Override
 	public void onCollideWith(Entity target) {
 		// TODO Auto-generated method stub
-		if (target instanceof CanTakePhysicalDamage) {
-			((CanTakePhysicalDamage) target).takePhysicalDamage(getAtkDamage());
+		if (target instanceof CanTakeBombDamage) {
+			((CanTakeBombDamage) target).takeBombDamage(getAtkDamage());
 		}
 	}
 

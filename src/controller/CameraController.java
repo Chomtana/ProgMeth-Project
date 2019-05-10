@@ -62,8 +62,8 @@ public class CameraController
 		double xpos = center.getCol() * Block.WIDTH + Block.WIDTH/2;
 		double ypos = center.getRow() * Block.HEIGHT + Block.HEIGHT/2;
 		//System.out.println(playerBound.getMinX()+" "+playerBound.getMinY());
-		double hval = ((xpos-(double)area.getWidthReal()/2)/(double)totalx);
-		double vval = ((ypos-(double)area.getHeightReal()/2)/(double)totaly);
+		double hval = ((xpos-(double)area.getWidthReal()/2 + 15)/(double)totalx);
+		double vval = ((ypos-(double)area.getHeightReal()/2 + 15)/(double)totaly);
 		area.setHvalue( hval );
 		area.setVvalue( vval );
 		//System.out.println(xpos);

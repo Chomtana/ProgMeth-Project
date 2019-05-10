@@ -1,6 +1,12 @@
 package gui;
 
 import application.Main;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 
 public class BlockView extends StackPane {
@@ -10,6 +16,15 @@ public class BlockView extends StackPane {
 	public BlockView() {
 		this.setPrefWidth(Block.WIDTH);
 		this.setPrefHeight(Block.HEIGHT);
+		//this.setBackground(blockBG);
+		//this.setStyle("-fx-background-image: url(\"bg2.jpg\"), url(\"DukeWithHelmet.png\");")
+		//this.setStyle("-fx-background-size: cover;");
+		this.setStyle(
+	            "-fx-background-image: url(" +
+	            		ImageStore.getInstance().blockBG +
+	            "); " +
+	            "-fx-background-size: 100%, 100%;"
+	        );
 	}
 	
 	public BlockView(int realrow,int realcol) {
