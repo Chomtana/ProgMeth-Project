@@ -1,14 +1,7 @@
 package entity.monster;
 
-import java.util.Random;
-
-import controller.EventController;
-import entity.HasHP;
-import entity.Player;
-import entity.UnmoveableException;
+import entity.CanTakePhysicalDamage;
 import gui.Block;
-import javafx.application.Platform;
-import rule.ThreadRule;
 
 public class Boomer extends EnemyMonster {
 	
@@ -39,13 +32,13 @@ public class Boomer extends EnemyMonster {
 	};*/
 
 	@Override
-	public void attack(HasHP target) {
+	public void attack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
-		
+		super.attack(target);
 	}
 
 	@Override
-	public boolean canAttack(HasHP target) {
+	public boolean canAttack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
 		return super.canAttack(target);
 	}

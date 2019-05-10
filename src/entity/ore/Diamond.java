@@ -4,6 +4,9 @@ import gui.Block;
 
 public class Diamond extends Ore
 {
+	
+	private double hp = 20;
+	private double armor = 4;
 
 	public Diamond(int row, int col)
 	{
@@ -19,6 +22,30 @@ public class Diamond extends Ore
 	
 	public void render(Block b) {
 		b.testLabel.setText("D");
+	}
+
+	@Override
+	public double getHP() {
+		// TODO Auto-generated method stub
+		return hp;
+	}
+
+	@Override
+	public void setHP(double hp) {
+		// TODO Auto-generated method stub
+		this.hp = hp;
+	}
+
+	@Override
+	public double getArmor() {
+		// TODO Auto-generated method stub
+		return armor;
+	}
+
+	@Override
+	public void setArmor(double armor) {
+		// TODO Auto-generated method stub
+		this.armor = armor;
 	}
 
 }

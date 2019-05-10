@@ -2,11 +2,15 @@ package controller;
 
 import java.util.ArrayList;
 
+import entity.Direction;
 import entity.Player;
+import gui.Block;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.StackPane;
 
 public class EventController {
 	private Scene scene;
@@ -20,6 +24,7 @@ public class EventController {
 	public EventController(Scene s) {
 		scene = s;
 		registerOnKey();
+		registerMouse();
 		registerAnimationTimer();
 	}
 	
@@ -68,6 +73,49 @@ public class EventController {
     	    	DOWN = false;
     	    }
     	});
+	}
+	
+	private void registerMouse() {
+		scene.setOnMouseMoved(e -> {
+			double mousex = e.getSceneX();
+			double mousey = e.getSceneY();
+			Bounds playerBound = Player.mainPlayer.getBlock().localToScene(((StackPane)scene.getRoot()).getBoundsInLocal());
+			//System.out.println(mousex);
+			//System.out.println(playerBound.getMinX());
+			double playerx = playerBound.getMinX()+Block.WIDTH/2;
+			double playery = playerBound.getMinY()+Block.HEIGHT/2;
+			
+			double absx = Math.abs(mousex-playerx);
+			double absy = Math.abs(mousey-playery);
+			if (absx > absy) {
+				//x base
+				if (mousex < playerx) {
+					Player.mainPlayer.setFacing(Direction.LEFT);
+					//System.out.println("LEFT");
+				} else {
+					Player.mainPlayer.setFacing(Direction.RIGHT);
+					//System.out.println("RIGHT");
+				}
+			} else {
+				//y base
+				if (mousey < playery) {
+					Player.mainPlayer.setFacing(Direction.UP);
+					//System.out.println("UP");
+				} else {
+					Player.mainPlayer.setFacing(Direction.DOWN);
+					//System.out.println("DOWN");
+				}
+			}
+		});
+		
+		scene.setOnMousePressed(e->{
+	        if (e.isPrimaryButtonDown()) {
+	            Player.mainPlayer.attack();
+	            //System.out.println("dsadsasad");
+	        } else {
+	        	
+	        }
+		});
 	}
 	
 	public Scene getScene() {

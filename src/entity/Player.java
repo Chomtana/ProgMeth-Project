@@ -3,12 +3,13 @@ package entity;
 import java.util.ArrayList;
 
 import application.Main;
+import effect.AttackEffect;
 import entity.monster.EnemyMonster;
 import entity.monster.Monster;
 import gui.Block;
 import gui.GameAreaInner;
 
-public class Player extends Monster {
+public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalDamage, CanTakeBombDamage {
 	
 	public static int START_ROW = 0;
 	public static int START_COL = 0;
@@ -16,24 +17,64 @@ public class Player extends Monster {
 	public static Player mainPlayer = new Player(START_ROW,START_COL);
 	private Direction facing = Direction.UP;
 	
-	protected int moveDelay = 250;
+	
+	protected int moveDelay = 100;
+	
+	private double hp = 100;
+	private double armor = 0;
+	private double atkDamage = 5;
 	
 	public Player(int row,int col) {
 		super(row,col);
 	}
 
 	@Override
-	public void attack(HasHP target) {
+	public void attack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
 		if (!canAttack(target)) return;
 		
-		target.takeDamage(1);
+		if (target instanceof Entity) {
+			new AttackEffect((Entity) target, atkDamage);
+		} else {
+			target.takePhysicalDamage(atkDamage);
+		}
 		
 		super.attack(target);
 	}
+	
+	public void attack() {
+		Direction d =getFacing();
+		try {
+			if (d == Direction.LEFT) {
+				Entity e = Block.getBlock(getRow(), getCol()-1).getEntity();
+				if (e instanceof CanTakePhysicalDamage) {
+					attack((CanTakePhysicalDamage) e);
+				}
+			} else if (d == Direction.RIGHT) {
+				Entity e = Block.getBlock(getRow(), getCol()+1).getEntity();
+				if (e instanceof CanTakePhysicalDamage) {
+					attack((CanTakePhysicalDamage) e);
+				}
+			} else if (d == Direction.UP) {
+				Entity e = Block.getBlock(getRow()-1, getCol()).getEntity();
+				if (e instanceof CanTakePhysicalDamage) {
+					attack((CanTakePhysicalDamage) e);
+				}
+			} else if (d == Direction.DOWN) {
+				Entity e = Block.getBlock(getRow()+1, getCol()).getEntity();
+				if (e instanceof CanTakePhysicalDamage) {
+					attack((CanTakePhysicalDamage) e);
+				}
+			}
+		} catch (IndexOutOfBoundsException e) {
+			
+		} catch (NullPointerException e) {
+			
+		}
+	}
 
 	@Override
-	public boolean canAttack(HasHP target) {
+	public boolean canAttack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
 		return super.canAttack(target);
 	}
@@ -54,30 +95,30 @@ public class Player extends Monster {
 			//System.out.println("dsasdasad");
 			//ee.getWith().kill();
 			Entity target = ee.getWith();
-			if (target instanceof HasHP) {
-				attack((HasHP) target);
-			}
+			/*if (target instanceof CanTakePhysicalDamage && !(target instanceof Player)) {
+				attack((CanTakePhysicalDamage) target);
+			}*/
 		}
 	}
 	
 	public void moveLeft() {
 		this.moveTo(getRow(), getCol()-1);
-		setFacing(Direction.LEFT);
+		//setFacing(Direction.LEFT);
 	}
 	
 	public void moveRight() {
 		this.moveTo(getRow(), getCol()+1);
-		setFacing(Direction.RIGHT);
+		//setFacing(Direction.RIGHT);
 	}
 	
 	public void moveUp() {
 		this.moveTo(getRow()-1, getCol());
-		setFacing(Direction.UP);
+		//setFacing(Direction.UP);
 	}
 	
 	public void moveDown() {
 		this.moveTo(getRow()+1, getCol());
-		setFacing(Direction.DOWN);
+		//setFacing(Direction.DOWN);
 	}
 	
 	@Override
@@ -131,6 +172,44 @@ public class Player extends Monster {
 		}
 		
 		return res;
+	}
+
+	@Override
+	public double getArmor() {
+		// TODO Auto-generated method stub
+		return armor;
+	}
+
+	@Override
+	public void setArmor(double armor) {
+		// TODO Auto-generated method stub
+		this.armor = armor;
+	}
+	
+	@Override
+	public double takePhysicalDamage(double damage) {
+		// TODO Auto-generated method stub
+		damage -= armor;
+		hp -= damage;
+		
+		if (!isAlive()) {
+			kill();
+		}
+		
+		return damage;
+	}
+
+	@Override
+	//Bomb ignore player armor
+	public double takeBombDamage(double damage) {
+		// TODO Auto-generated method stub
+		hp -= damage;
+		
+		if (!isAlive()) {
+			kill();
+		}
+		
+		return damage;
 	}
 
 }

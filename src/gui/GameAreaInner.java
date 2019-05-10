@@ -18,7 +18,12 @@ public class GameAreaInner extends GridPane
 
 	public static int NUM_COL = 100;
 	public static int NUM_ROW = 100;
+	
+	public static int VIEW_COL = 25;
+	public static int VIEW_ROW = 25;
+	
 	private HashMap<Integer, HashMap<Integer, Block>> blocks = new HashMap<Integer, HashMap<Integer, Block>>();
+	private HashMap<Integer, HashMap<Integer, BlockView>> block_views = new HashMap<Integer, HashMap<Integer, BlockView>>();
 	private boolean[][] isDiamondOre = new boolean[NUM_ROW][NUM_COL];
 	private boolean[][] isIronOre = new boolean[NUM_ROW][NUM_COL];
 	private boolean[][] isCoalOre = new boolean[NUM_ROW][NUM_COL];
@@ -29,6 +34,13 @@ public class GameAreaInner extends GridPane
 	{
 		super();
 		// Block b1 = new Block();
+		
+		GameAreaInner thiss =this;
+		
+		//this.setPrefWidth(NUM_COL * Block.WIDTH);
+		//this.setPrefHeight(NUM_ROW * Block.HEIGHT);
+		this.setWidth(NUM_COL * Block.WIDTH);
+		this.setHeight(NUM_ROW * Block.HEIGHT);
 
 		for (int i = 0; i < NUM_COL; i++)
 		{
@@ -47,9 +59,32 @@ public class GameAreaInner extends GridPane
 				if (!blocks.containsKey(j))
 					blocks.put(j, new HashMap());
 				blocks.get(j).put(i, block);
-				this.add(block, i, j);
+				//this.add(block, i, j);
+				
 			}
 		}
+		
+		EventController.onLoad(new Runnable()
+		{
+
+			@Override
+			public void run() {
+		
+				for (int i = 0; i < VIEW_COL; i++)
+				{
+					for (int j = 0; j < VIEW_ROW; j++)
+					{
+						BlockView bv = new BlockView(j,i);
+						if (i>=0 && j>=0) bv.setBlock(Block.getBlock(j, i),j,i);
+						if (!block_views.containsKey(j))
+							block_views.put(j, new HashMap());
+						block_views.get(j).put(i, bv);
+						thiss.add(bv, i, j);
+					}
+				}
+			}
+		});
+		
 
 		Platform.runLater(new Runnable()
 		{
@@ -221,6 +256,10 @@ public class GameAreaInner extends GridPane
 
 	public HashMap<Integer, HashMap<Integer, Block>> getBlocks() {
 		return blocks;
+	}
+	
+	public HashMap<Integer, HashMap<Integer, BlockView>> getBlockViews() {
+		return block_views;
 	}
 
 }

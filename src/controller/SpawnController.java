@@ -122,7 +122,7 @@ public class SpawnController {
 	}
 	
 	public SpawnController() {
-		Timeline moveAI = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+		Timeline moveAI = new Timeline(new KeyFrame(Duration.millis(500), e -> {
 			doMoveAI();
 		}));
 		moveAI.setCycleCount(Timeline.INDEFINITE);

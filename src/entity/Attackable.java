@@ -1,6 +1,6 @@
 package entity;
 
 public interface Attackable {
-	public abstract void attack(HasHP target);
-	public abstract boolean canAttack(HasHP target);
+	public abstract void attack(CanTakePhysicalDamage target);
+	public abstract boolean canAttack(CanTakePhysicalDamage target);
 }

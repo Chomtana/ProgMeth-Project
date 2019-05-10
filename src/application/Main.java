@@ -176,6 +176,8 @@ public class Main extends Application {
 				// TODO Auto-generated method stub
 				new SpawnController();
 				cameraController = new CameraController();
+				//cameraController.performSetCenter();
+				CameraController.registerInstance(cameraController);
 			}
 		});
     	

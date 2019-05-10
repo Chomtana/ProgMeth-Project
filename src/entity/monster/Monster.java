@@ -1,6 +1,7 @@
 package entity.monster;
 
 import entity.Attackable;
+import entity.CanTakePhysicalDamage;
 import entity.Entity;
 import entity.HasHP;
 import entity.MoveCollideException;
@@ -12,7 +13,7 @@ import gui.GameAreaInner;
 import javafx.application.Platform;
 import rule.ThreadRule;
 
-public abstract class Monster extends Entity implements Moveable, Attackable, HasHP {
+public abstract class Monster extends Entity implements Moveable, Attackable, HasHP, CanTakePhysicalDamage {
 	
 	protected int oldRow = -1;
 	protected int oldCol = -1;
@@ -122,14 +123,16 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 	}
 	
 	
-	public void takeDamage(double damage) {
-		hp -= damage;
+	public double takePhysicalDamage(double damage) {
+		setHP(getHP()-damage);
 		
-		System.out.println(hp);
+		System.out.println(getHP());
 		
 		if (!isAlive()) {
 			kill();
 		}
+		
+		return damage;
 	}
 	
 	public double getHP() {
@@ -139,11 +142,11 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 		this.hp = hp;
 	}
 	public boolean isAlive() {
-		return hp>0.0;
+		return getHP()>0.0;
 	}
 	
 	@Override
-	public void attack(HasHP target) {
+	public void attack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
 		if (!canAttack(target)) return;
 			
@@ -161,14 +164,39 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 			}
 		});
 		attackThrottle.start();
+		
+		moveThrottle = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					Platform.runLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							//Block.getBlock(oldRow, oldCol).removeEntity();
+							//Block.getBlock(currRow, currCol).setEntity(thiss);
+						}
+					});
+
+					Thread.sleep(getAttackDelay());
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+				}
+			}
+		});
+		moveThrottle.start();
 	}
 
 	@Override
-	public boolean canAttack(HasHP target) {
+	public boolean canAttack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
 		//System.out.println("xxx");
 		//if (attackThrottle!=null) System.out.println(attackThrottle.isAlive());
-		return attackThrottle == null || !attackThrottle.isAlive();
+		return (attackThrottle == null || !attackThrottle.isAlive()) && (moveThrottle == null || !moveThrottle.isAlive());
 	}
 
 }
