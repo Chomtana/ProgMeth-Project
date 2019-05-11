@@ -11,6 +11,8 @@ public class GameArea extends ScrollPane {
 	public GameArea() {
 		inner = new GameAreaInner();
 		this.setContent(inner);
+		this.setHbarPolicy(ScrollBarPolicy.NEVER);
+		this.setVbarPolicy(ScrollBarPolicy.NEVER);
 	}
 	
 	public GameAreaInner getInner() {

@@ -2,6 +2,8 @@ package item;
 
 import java.util.HashMap;
 
+import application.Main;
+
 public class Inventory {
 	private HashMap<String,Integer> items = new HashMap<String, Integer>();
 	
@@ -9,11 +11,22 @@ public class Inventory {
 	private int armorLevel = 0;
 	private int helmetLevel = 0;
 	private int bootLevel = 0;
+	private int pantLevel = 0;
 	
+	
+	public int getPantLevel() {
+		return pantLevel;
+	}
+
+	public void setPantLevel(int pantLevel) {
+		this.pantLevel = pantLevel;
+	}
+
 	public void add(String name,Integer amount) {
 		if (!items.containsKey(name)) items.put(name, 0);
 		items.put(name, items.get(name)+amount);
 		System.out.println(name);
+		Main.controlPanel.update();
 	}
 	
 	public void add(String name) {
@@ -28,6 +41,7 @@ public class Inventory {
 		} else {
 			items.put(name, target);
 		}
+		Main.controlPanel.update();
 	}
 	
 	public void use(String name) throws NotEnoughItemException {
@@ -38,6 +52,11 @@ public class Inventory {
 		if (!items.containsKey(name)) return false;
 		int target = items.get(name)-amount;
 		if (target<0) return false; else return true;
+	}
+	
+	public Integer get(String name) {
+		if (!items.containsKey(name)) return 0;
+		return items.get(name);
 	}
 
 	public int getSwordLevel() {

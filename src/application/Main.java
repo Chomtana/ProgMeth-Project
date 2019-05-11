@@ -6,24 +6,19 @@ import controller.CameraController;
 import controller.EventController;
 import controller.SpawnController;
 import entity.Player;
+import gui.ControlPanel;
 import gui.GameArea;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
  
@@ -36,119 +31,54 @@ public class Main extends Application {
 	public static StackPane eventPane;
 	public static Random random = new Random();
 	public static CameraController cameraController;
+	public static ControlPanel controlPanel;
+	public static Main instance;
+	public static StackPane root;
 	
-    public static void main(String[] args) {
+	
+	
+    public static Main getInstance() {
+		return instance;
+	}
+
+
+
+	public static void main(String[] args) {
         launch(args);
     }
+	
+	public static void endGame() {
+		Platform.exit();
+		
+	}
     
-    public HBox TopicControl() {
-    	HBox render = new HBox();
-    	
-    	Label label = new Label("Topic : ");
-    	TextField field = new TextField();
-    	
-    	Topic = field;
-    	
-    	field.setPrefWidth(200);
-    	
-    	render.getChildren().add(label);
-    	render.getChildren().add(field);
-    	
-    	return render;
-    }
     
-    public HBox DateControl() {
-    	HBox render = new HBox();
-    	
-    	Label label = new Label("Date : ");
-    	DatePicker field = new DatePicker();
-    	
-    	Date = field;
-    	
-    	field.setPrefWidth(150);
-    	
-    	render.getChildren().add(label);
-    	render.getChildren().add(field);
-    	
-    	return render;
-    }
-    
-    public VBox TopControl() {
-    	VBox render = new VBox();
-    	
-    	render.setSpacing(3);
-    	
-    	render.getChildren().add(TopicControl());
-    	render.getChildren().add(DateControl());
-    	
-    	
-    	return render;
-    }
-    
-    public HBox BottomControl() {
-    	HBox render = new HBox();
-    	
-    	render.setSpacing(3);
-    	render.setAlignment(Pos.CENTER_RIGHT);
-    	
-    	Button OK = new Button("OK");
-    	Button Clear = new Button("Clear");
-    	
-    	OK.setPrefWidth(60);
-    	Clear.setPrefWidth(60);
-    	
-    	render.getChildren().add(OK);
-    	render.getChildren().add(Clear);
-    	
-    	OK.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				Alert a = new Alert(AlertType.INFORMATION);
-				a.setTitle("Message");
-				a.setContentText("Topic : "+Topic.getText()+"\nDate : "+Date.getValue().toString()+"\nDescription : "+Description.getText());
-				a.show();
-			}
-		});
-    	
-    	Clear.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				Topic.setText("");
-				Date.setValue(null);
-				Description.setText("");
-			}
-		});
-    	
-    	return render;
-    }
     
     @Override
     public void start(Stage primaryStage) {
+    	instance = this;
     	primaryStage.setTitle("Ja Boom Mine By InfinityBug");
+    	primaryStage.setResizable(false);
     	
-    	StackPane root = new StackPane();
-    	Scene scene = new Scene(root,600,600);
+    	root = new StackPane();
+    	Scene scene = new Scene(root,900,600);
     	
     	Description = new TextArea();
     	
-    	root.setPadding(new Insets(10,5,10,5));
-    	
-    	VBox div1 = new VBox();
-    	
-    	div1.setSpacing(8);
-    	
-    	div1.getChildren().add(TopControl());
-    	div1.getChildren().add(Description);
-    	div1.getChildren().add(BottomControl());
+    	root.setPadding(new Insets(0,0,0,0));
+    	root.setStyle("-fx-background-color: lemonchiffon;");
     	
     	eventPane = new StackPane();
     	
-    	root.getChildren().add(gameArea = new GameArea());
-    	root.getChildren().add(eventPane);
+    	HBox hb = new HBox();
+    	//hb.setSpacing(10);
+    	
+    	StackPane st1 = new StackPane();
+    	
+    	st1.getChildren().add(gameArea = new GameArea());
+    	st1.getChildren().add(eventPane);
+    	
+    	
     	
     	new EventController(scene);
     	
@@ -191,6 +121,10 @@ public class Main extends Application {
 								@Override
 								public void run() {
 									// TODO Auto-generated method stub
+									controlPanel = new ControlPanel();
+									hb.getChildren().add(controlPanel);
+									hb.getChildren().add(st1);
+									root.getChildren().add(hb);
 									cameraController.performSetCenter();
 								}
 							});
@@ -248,4 +182,10 @@ public class Main extends Application {
 			}
 		};*/
     }
+
+	public static StackPane getEventPane() {
+		return eventPane;
+	}
+    
+    
 }

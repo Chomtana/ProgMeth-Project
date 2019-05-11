@@ -8,7 +8,7 @@ import effect.BombEffect;
 import entity.monster.EnemyMonster;
 import entity.monster.Monster;
 import gui.Block;
-import gui.GameAreaInner;
+import item.Crafter;
 import item.Inventory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,14 +25,15 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	
 	protected int moveDelay = 100;
 	
-	private double hp = 10000;
-	private double maxhp = 10000;
+	private double hp = 100;
+	private double maxhp = 100;
 	private double regenhp = 0;
 	private double armor = 0;
 	private double atkDamage = 5;
 	private double bombDamage = 10;
 	private int bombRadius = 3;
-	public Inventory inventory = new Inventory();
+	private Inventory inventory = new Inventory();
+	private Crafter crafter = new Crafter(inventory);
 	private int level = 1;
 	private static int exptable[] = new int[100];
 	private int exp = 0;
@@ -63,13 +64,14 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	
 	public void receiveEXP(int exp) {
 		setExp(getExp()+exp);
-		if (getExp() >= getCurrentLevelEXPNeeded()) {
+		while (getExp() >= getCurrentLevelEXPNeeded()) {
 			setLevel(getLevel()+1);
-			setExp(getExp() - exptable[getLevel()]);
+			setExp(getExp() - exptable[getLevel()-1]);
 			setHP(getHP()+10);
 		}
 		System.out.println(getExp());
 		System.out.println(getLevel());
+		Main.controlPanel.update();
 	}
 	
 	
@@ -109,6 +111,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 
 	public void setMaxhp(double maxhp) {
 		this.maxhp = maxhp;
+		Main.controlPanel.update();
 	}
 
 
@@ -325,6 +328,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 		System.out.println(getHP());
 		
 		if (!isAlive()) {
+			Main.endGame();
 			kill();
 		}
 		
@@ -341,6 +345,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 		
 		if (!isAlive()) {
 			System.out.println("player dead");
+			Main.endGame();
 			kill();
 		}
 		
@@ -352,12 +357,18 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	}
 	public void setHP(double hp) {
 		this.hp = hp;
+		Main.controlPanel.update();
 	}
 
 	@Override
 	public Inventory getInventory() {
 		// TODO Auto-generated method stub
 		return inventory;
+	}
+	
+	public Crafter getCrafter() {
+		// TODO Auto-generated method stub
+		return crafter;
 	}
 	
 }

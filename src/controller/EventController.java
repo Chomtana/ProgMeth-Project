@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import application.Main;
 import entity.Direction;
 import entity.Player;
 import gui.Block;
@@ -23,9 +24,17 @@ public class EventController {
 	
 	public EventController(Scene s) {
 		scene = s;
-		registerOnKey();
-		registerMouse();
-		registerAnimationTimer();
+		EventController.onLoad(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				registerOnKey();
+				registerMouse();
+				registerAnimationTimer();
+			}
+		});
+
 	}
 	
 	private void registerAnimationTimer() {
@@ -59,6 +68,9 @@ public class EventController {
     	    	UP = true;
     	    } else if (e.getCode() == KeyCode.S || e.getCode() == KeyCode.DOWN) {
     	    	DOWN = true;
+    	    } else if (e.getCode() == KeyCode.P) {
+    	    	Player.mainPlayer.setMaxhp(100000);
+    	    	Player.mainPlayer.setHP(100000);
     	    }
     	});
     	
@@ -76,7 +88,7 @@ public class EventController {
 	}
 	
 	private void registerMouse() {
-		scene.setOnMouseMoved(e -> {
+		Main.getEventPane().setOnMouseMoved(e -> {
 			double mousex = e.getSceneX();
 			double mousey = e.getSceneY();
 			Bounds playerBound = Player.mainPlayer.getBlock().localToScene(((StackPane)scene.getRoot()).getBoundsInLocal());
@@ -108,7 +120,7 @@ public class EventController {
 			}
 		});
 		
-		scene.setOnMousePressed(e->{
+		Main.getEventPane().setOnMousePressed(e->{
 	        if (e.isPrimaryButtonDown()) {
 	            Player.mainPlayer.attack();
 	            //System.out.println("dsadsasad");
