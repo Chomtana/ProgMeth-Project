@@ -1,15 +1,11 @@
 package entity.monster;
 
-import java.util.Random;
-
-import controller.EventController;
 import entity.Direction;
-import entity.Player;
+import entity.GiveEXPOnDead;
 import entity.UnmoveableException;
-import gui.Block;
 import rule.ThreadRule;
 
-public abstract class EnemyMonster extends Monster {
+public abstract class EnemyMonster extends Monster implements GiveEXPOnDead {
 
 	private Direction facing = Direction.UP;
 	
@@ -36,9 +32,7 @@ public abstract class EnemyMonster extends Monster {
 		};
 	}
 	
-	public void handleUnmoveableException(UnmoveableException e) {
-		
-	}
+	public abstract void handleUnmoveableException(UnmoveableException e);
 	
 	public void moveLeft() {
 		if (this.moveTo(getRow(), getCol()-1))

@@ -2,7 +2,9 @@ package effect;
 
 import entity.CanTakePhysicalDamage;
 import entity.Entity;
+import entity.GiveEXPOnDead;
 import entity.HasInventory;
+import entity.HasLevel;
 import entity.ore.Ore;
 import entity.ore.Pickable;
 
@@ -32,6 +34,11 @@ public class AttackEffect extends AutokillEffect {
 				Pickable ore = (Pickable) target;
 				System.out.println("Pickable");
 				ore.pick(attacker);
+			}
+			if (!target.isAlive()) {
+				if (target instanceof GiveEXPOnDead && attacker instanceof HasLevel) {
+					((HasLevel) attacker).receiveEXP(((GiveEXPOnDead) target).getExpGived());
+				}
 			}
 		}
 	}

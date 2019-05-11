@@ -7,6 +7,7 @@ import gui.Block;
 import gui.BlockView;
 import gui.GameArea;
 import gui.GameAreaInner;
+import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 
@@ -64,6 +65,7 @@ public class CameraController
 		//System.out.println(playerBound.getMinX()+" "+playerBound.getMinY());
 		double hval = ((xpos-(double)area.getWidthReal()/2 + 15)/(double)totalx);
 		double vval = ((ypos-(double)area.getHeightReal()/2 + 15)/(double)totaly);
+		//if(hval>25) hval = 1.0164883162262504;
 		area.setHvalue( hval );
 		area.setVvalue( vval );
 		//System.out.println(xpos);
@@ -72,8 +74,8 @@ public class CameraController
 		
 		double blocksinrow = area.getHeight()/Block.HEIGHT;
 		double blocksincol = area.getWidth()/Block.WIDTH;
-		int topleftrow = (int) Math.min(GameAreaInner.NUM_ROW - blocksinrow, Math.max(-9999, center.getRow() - Math.round((blocksinrow-1)/2)));
-		int topleftcol = (int) Math.min(GameAreaInner.NUM_COL - blocksincol, Math.max(-9999, center.getCol() - Math.round((blocksincol-1)/2)));
+		int topleftrow = (int) Math.min(9999, Math.max(-9999, center.getRow() - Math.round((blocksinrow-1)/2)));
+		int topleftcol = (int) Math.min(9999, Math.max(-9999, center.getCol() - Math.round((blocksincol-1)/2)));
 		
 		area.getInner().setPadding(new Insets(
 			Math.max(0, topleftrow*Block.HEIGHT),
@@ -86,6 +88,7 @@ public class CameraController
 		//System.out.println(GameAreaInner.NUM_COL - blocksincol);
 		if (topleftrow != BlockView.getBlockView(0, 0).getRealRow() || topleftcol != BlockView.getBlockView(0, 0).getRealCol()) {
 			//System.out.println(topleftrow); System.out.println(topleftcol);
+			//System.out.println(hval);
 			for(int i = 0;i<GameAreaInner.VIEW_ROW;i++) {
 				for(int j = 0;j<GameAreaInner.VIEW_COL;j++) {
 					BlockView bv = BlockView.getBlockView(i, j);
@@ -103,9 +106,35 @@ public class CameraController
 					} else if (targetrow < 0) {
 						targetrow = targetrow + GameAreaInner.NUM_ROW;
 					}
-					bv.setBlock(Block.getBlock(targetrow, targetcol),targetrow,targetcol);
+					bv.setBlock(Block.getBlock(targetrow, targetcol),i+topleftrow,j+topleftcol);
 
 				}
+			}
+			//performSetCenter();
+			if (topleftcol == 94 || topleftrow == 94) {
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							Thread.sleep(25);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+						}
+						Platform.runLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								performSetCenter();
+							}
+						});
+						
+					}
+				}).start();
+				
 			}
 		}
 		

@@ -157,7 +157,7 @@ public class SpawnController {
 			return;
 		}
 		
-		int loopcount = 100;
+		int loopcount = 10;
 		
 		while(loopcount-- > 0) {
 			int r = -1;

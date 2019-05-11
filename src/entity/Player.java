@@ -10,8 +10,11 @@ import entity.monster.Monster;
 import gui.Block;
 import gui.GameAreaInner;
 import item.Inventory;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
-public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalDamage, CanTakeBombDamage, HasInventory {
+public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalDamage, CanTakeBombDamage, HasInventory, HasLevel {
 	
 	public static int START_ROW = 50;
 	public static int START_COL = 50;
@@ -23,15 +26,104 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	protected int moveDelay = 100;
 	
 	private double hp = 10000;
+	private double maxhp = 10000;
+	private double regenhp = 0;
 	private double armor = 0;
 	private double atkDamage = 5;
 	private double bombDamage = 10;
 	private int bombRadius = 3;
 	public Inventory inventory = new Inventory();
+	private int level = 1;
+	private static int exptable[] = new int[100];
+	private int exp = 0;
 	
+	static {
+		exptable[0] = 1;
+		exptable[1] = 1;
+		for(int i = 2;i<100;i++) {
+			exptable[i] = exptable[i-1] + exptable[i-2];
+		}
+	}
+	
+	
+	
+	public int getLevel() {
+		return level;
+	}
+
+
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	public int getCurrentLevelEXPNeeded() {
+		return exptable[getLevel()];
+	}
+	
+	public void receiveEXP(int exp) {
+		setExp(getExp()+exp);
+		if (getExp() >= getCurrentLevelEXPNeeded()) {
+			setLevel(getLevel()+1);
+			setExp(getExp() - exptable[getLevel()]);
+			setHP(getHP()+10);
+		}
+		System.out.println(getExp());
+		System.out.println(getLevel());
+	}
+	
+	
+
+
+
+	public int getExp() {
+		return exp;
+	}
+
+
+
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+
+
+
 	public Player(int row,int col) {
 		super(row,col);
+		
+		Timeline regenHP = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
+			setHP(Math.min(getHP()+getRegenhp(), getMaxhp()));
+			System.out.println(getHP());
+		}));
+		regenHP.setCycleCount(Timeline.INDEFINITE);
+		regenHP.play();
 	}
+	
+	
+
+	public double getMaxhp() {
+		return maxhp + (getLevel()-1)*10;
+	}
+
+
+
+	public void setMaxhp(double maxhp) {
+		this.maxhp = maxhp;
+	}
+
+
+
+	public double getRegenhp() {
+		return regenhp + (getLevel()-1)*0.5;
+	}
+
+
+
+	public void setRegenhp(double regenhp) {
+		this.regenhp = regenhp;
+	}
+
+
 
 	@Override
 	public void attack(CanTakePhysicalDamage target) {
@@ -39,9 +131,9 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 		if (!canAttack(target)) return;
 		
 		if (target instanceof Entity) {
-			new AttackEffect((Entity) target, atkDamage, this);
+			new AttackEffect((Entity) target, getAtkDamage(), this);
 		} else {
-			target.takePhysicalDamage(atkDamage);
+			target.takePhysicalDamage(getAtkDamage());
 		}
 		
 		super.attack(target);
@@ -187,7 +279,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	@Override
 	public double getArmor() {
 		// TODO Auto-generated method stub
-		return armor;
+		return armor + getLevel()-1 + getInventory().getArmorLevel()*exptable[getInventory().getArmorLevel()+2] ;
 	}
 
 	@Override
@@ -199,7 +291,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	
 	
 	public double getAtkDamage() {
-		return atkDamage;
+		return atkDamage + getLevel()-1 + getInventory().getSwordLevel()*exptable[getInventory().getSwordLevel()+2];
 	}
 
 	public void setAtkDamage(double atkDamage) {
@@ -207,7 +299,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	}
 
 	public double getBombDamage() {
-		return bombDamage;
+		return bombDamage + getLevel()-1;
 	}
 
 	public void setBombDamage(double bombDamage) {

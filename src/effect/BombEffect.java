@@ -3,6 +3,7 @@ package effect;
 import entity.CanTakePhysicalDamage;
 import entity.Entity;
 import gui.GameAreaInner;
+import gui.ImageStore;
 
 public class BombEffect extends AutokillEffect {
 	
@@ -72,7 +73,7 @@ public class BombEffect extends AutokillEffect {
 	@Override
 	public String getIcon() {
 		// TODO Auto-generated method stub
-		return null;
+		return ImageStore.getInstance().bomb;
 	}
 
 	public double getAtkDamage() {

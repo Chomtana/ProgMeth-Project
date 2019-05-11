@@ -7,7 +7,7 @@ public class Iron extends Ore
 {
 
 	private double hp = 10;
-	private double armor = 3;
+	private double armor = 4;
 	
 	public Iron(int row, int col)
 	{

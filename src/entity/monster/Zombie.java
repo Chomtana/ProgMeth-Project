@@ -1,16 +1,30 @@
 package entity.monster;
 
+import effect.AttackEffect;
 import entity.CanTakePhysicalDamage;
 import entity.Direction;
-import gui.Block;
+import entity.Entity;
+import entity.MoveCollideException;
+import entity.UnmoveableException;
+import entity.ore.Ore;
 import gui.ImageStore;
 
 public class Zombie extends EnemyMonster {
 	
 	//public static int RADIUS = 15;
 	
+	private double atkDamage = 5;
 	
 	
+	
+	public double getAtkDamage() {
+		return atkDamage;
+	}
+
+	public void setAtkDamage(double atkDamage) {
+		this.atkDamage = atkDamage;
+	}
+
 	public Zombie(int row,int col) {
 		super(row,col);
 	}
@@ -36,6 +50,14 @@ public class Zombie extends EnemyMonster {
 	@Override
 	public void attack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
+		if (!canAttack(target)) return;
+		
+		if (target instanceof Entity) {
+			new AttackEffect((Entity) target, getAtkDamage(), this);
+		} else {
+			target.takePhysicalDamage(getAtkDamage());
+		}
+		
 		super.attack(target);
 	}
 
@@ -43,6 +65,18 @@ public class Zombie extends EnemyMonster {
 	public boolean canAttack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
 		return super.canAttack(target);
+	}
+	
+	public void handleUnmoveableException(UnmoveableException e) {
+		if (e instanceof MoveCollideException) {
+			MoveCollideException ee = (MoveCollideException) e;
+			//System.out.println("dsasdasad");
+			//ee.getWith().kill();
+			Entity target = ee.getWith();
+			if (target instanceof CanTakePhysicalDamage && !(target instanceof Ore)) {
+				attack((CanTakePhysicalDamage) target);
+			}
+		}
 	}
 
 	@Override
@@ -53,6 +87,12 @@ public class Zombie extends EnemyMonster {
 		else if (getFacing() == Direction.LEFT) return ImageStore.getInstance().zombieL;
 		else if (getFacing() == Direction.RIGHT) return ImageStore.getInstance().zombieR;
 		return ImageStore.getInstance().zombieU;
+	}
+
+	@Override
+	public int getExpGived() {
+		// TODO Auto-generated method stub
+		return 1;
 	}
 
 }

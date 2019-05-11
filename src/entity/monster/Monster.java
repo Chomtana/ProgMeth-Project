@@ -133,7 +133,7 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 	}
 	
 	public int getAttackDelay() {
-		return 250;
+		return 400;
 	}
 	
 	

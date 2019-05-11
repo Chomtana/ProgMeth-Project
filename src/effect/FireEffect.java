@@ -3,6 +3,10 @@ package effect;
 import entity.CanTakeBombDamage;
 import entity.CanTakePhysicalDamage;
 import entity.Entity;
+import entity.GiveEXPOnDead;
+import entity.HasLevel;
+import entity.ore.Pickable;
+import gui.ImageStore;
 
 public class FireEffect extends AutokillEffect {
 	
@@ -26,13 +30,23 @@ public class FireEffect extends AutokillEffect {
 		// TODO Auto-generated method stub
 		if (target instanceof CanTakeBombDamage) {
 			((CanTakeBombDamage) target).takeBombDamage(getAtkDamage());
+			if (target instanceof Pickable) {
+				Pickable ore = (Pickable) target;
+				System.out.println("Pickable");
+				ore.pick(attacker);
+			}
+			if (!target.isAlive()) {
+				if (target instanceof GiveEXPOnDead && attacker instanceof HasLevel) {
+					((HasLevel) attacker).receiveEXP(((GiveEXPOnDead) target).getExpGived());
+				}
+			}
 		}
 	}
 
 	@Override
 	public String getIcon() {
 		// TODO Auto-generated method stub
-		return null;
+		return ImageStore.getInstance().fire;
 	}
 
 	public double getAtkDamage() {

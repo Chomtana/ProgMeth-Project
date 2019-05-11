@@ -7,7 +7,7 @@ public class Diamond extends Ore
 {
 	
 	private double hp = 20;
-	private double armor = 4;
+	private double armor = 7;
 
 	public Diamond(int row, int col)
 	{

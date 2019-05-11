@@ -18,6 +18,9 @@ public class ImageStore {
 	public String zombieD = ClassLoader.getSystemResource("img/zombieD.png").toString();
 	public String zombieL = ClassLoader.getSystemResource("img/zombieL.png").toString();
 	
+	public String bomb = ClassLoader.getSystemResource("img/bomb.png").toString();
+	public String fire = ClassLoader.getSystemResource("img/fire.png").toString();
+	
 	public ImageStore() {
 		
 	}

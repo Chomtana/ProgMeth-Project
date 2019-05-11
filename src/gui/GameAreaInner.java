@@ -19,8 +19,8 @@ public class GameAreaInner extends GridPane
 	public static int NUM_COL = 100;
 	public static int NUM_ROW = 100;
 	
-	public static int VIEW_COL = 20;
-	public static int VIEW_ROW = 20;
+	public static int VIEW_COL = 15;
+	public static int VIEW_ROW = 15;
 	
 	private HashMap<Integer, HashMap<Integer, Block>> blocks = new HashMap<Integer, HashMap<Integer, Block>>();
 	private HashMap<Integer, HashMap<Integer, BlockView>> block_views = new HashMap<Integer, HashMap<Integer, BlockView>>();

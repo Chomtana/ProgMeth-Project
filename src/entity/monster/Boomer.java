@@ -4,6 +4,7 @@ import effect.FireEffect;
 import entity.CanTakePhysicalDamage;
 import entity.Direction;
 import entity.Player;
+import entity.UnmoveableException;
 import gui.Block;
 import gui.ImageStore;
 import javafx.application.Platform;
@@ -37,6 +38,10 @@ public class Boomer extends EnemyMonster {
 			return Math.abs(Player.mainPlayer.getRow() - getRow()) <= RADIUS || Math.abs(Player.mainPlayer.getCol() - getCol()) <= RADIUS;
 		}
 	};*/
+	
+	public void handleUnmoveableException(UnmoveableException e) {
+		
+	}
 	
 	@Override
 	public boolean moveTo(int row,int col) {
@@ -113,6 +118,12 @@ public class Boomer extends EnemyMonster {
 		else if (getFacing() == Direction.LEFT) return ImageStore.getInstance().boomerL;
 		else if (getFacing() == Direction.RIGHT) return ImageStore.getInstance().boomerR;
 		return ImageStore.getInstance().boomerU;
+	}
+
+	@Override
+	public int getExpGived() {
+		// TODO Auto-generated method stub
+		return 5;
 	}
 
 }
