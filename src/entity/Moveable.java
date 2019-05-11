@@ -1,6 +1,6 @@
 package entity;
 
-import rule.ThreadRule;
+
 
 public interface Moveable {
 	public boolean canMoveTo(int row,int col) throws UnmoveableException;

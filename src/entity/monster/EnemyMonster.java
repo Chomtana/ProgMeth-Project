@@ -3,33 +3,15 @@ package entity.monster;
 import entity.Direction;
 import entity.GiveEXPOnDead;
 import entity.UnmoveableException;
-import rule.ThreadRule;
 
 public abstract class EnemyMonster extends Monster implements GiveEXPOnDead {
 
 	private Direction facing = Direction.UP;
 	
 	protected int moveDelay = 400;
-	private ThreadRule<Boolean> moveAI;
 	
 	public EnemyMonster(int row,int col) {
 		super(row,col);
-		moveAI = new ThreadRule<Boolean>() {
-			
-			@Override
-			public void onChange(Boolean curr, Boolean prev) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public Boolean get() {
-				// TODO Auto-generated method stub
-
-				
-				return null;
-			}
-		};
 	}
 	
 	public abstract void handleUnmoveableException(UnmoveableException e);

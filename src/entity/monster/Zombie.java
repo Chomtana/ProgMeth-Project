@@ -1,6 +1,8 @@
 package entity.monster;
 
+import controller.TimeController;
 import effect.AttackEffect;
+import entity.Attackable;
 import entity.CanTakePhysicalDamage;
 import entity.Direction;
 import entity.Entity;
@@ -9,7 +11,7 @@ import entity.UnmoveableException;
 import entity.ore.Ore;
 import gui.ImageStore;
 
-public class Zombie extends EnemyMonster {
+public class Zombie extends EnemyMonster implements Attackable {
 	
 	//public static int RADIUS = 15;
 	
@@ -18,7 +20,7 @@ public class Zombie extends EnemyMonster {
 	
 	
 	public double getAtkDamage() {
-		return atkDamage;
+		return atkDamage+TimeController.getCurrentTime()/15000;
 	}
 
 	public void setAtkDamage(double atkDamage) {
@@ -73,7 +75,7 @@ public class Zombie extends EnemyMonster {
 			//System.out.println("dsasdasad");
 			//ee.getWith().kill();
 			Entity target = ee.getWith();
-			if (target instanceof CanTakePhysicalDamage && !(target instanceof Ore)) {
+			if (target instanceof CanTakePhysicalDamage && !(target instanceof Ore) && !(target instanceof EnemyMonster)) {
 				attack((CanTakePhysicalDamage) target);
 			}
 		}

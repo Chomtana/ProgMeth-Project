@@ -14,7 +14,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalDamage, CanTakeBombDamage, HasInventory, HasLevel {
+public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalDamage, CanTakeBombDamage, HasInventory, HasLevel, Attackable {
 	
 	public static int START_ROW = 50;
 	public static int START_COL = 50;
@@ -114,7 +114,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 
 
 	public double getRegenhp() {
-		return regenhp + (getLevel()-1)*0.5;
+		return regenhp + (getLevel()-1)*0.25;
 	}
 
 

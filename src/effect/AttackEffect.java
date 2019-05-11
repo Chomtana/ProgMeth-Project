@@ -7,6 +7,7 @@ import entity.HasInventory;
 import entity.HasLevel;
 import entity.ore.Ore;
 import entity.ore.Pickable;
+import gui.ImageStore;
 
 public class AttackEffect extends AutokillEffect {
 	
@@ -46,7 +47,7 @@ public class AttackEffect extends AutokillEffect {
 	@Override
 	public String getIcon() {
 		// TODO Auto-generated method stub
-		return null;
+		return ImageStore.getInstance().attack;
 	}
 
 	public double getAtkDamage() {

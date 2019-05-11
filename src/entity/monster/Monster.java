@@ -1,5 +1,6 @@
 package entity.monster;
 
+import controller.TimeController;
 import entity.Attackable;
 import entity.CanTakePhysicalDamage;
 import entity.Entity;
@@ -11,7 +12,6 @@ import entity.UnmoveableException;
 import gui.Block;
 import gui.GameAreaInner;
 import javafx.application.Platform;
-import rule.ThreadRule;
 
 public abstract class Monster extends Entity implements Moveable, Attackable, HasHP, CanTakePhysicalDamage {
 	
@@ -19,29 +19,13 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 	protected int oldCol = -1;
 	
 	private Thread moveThrottle = null;
-	private ThreadRule<Boolean> bouncer;
 	private Thread attackThrottle = null;
 	
-	private double hp = 10;
+	private double hp = 10+TimeController.getCurrentTime()/6000;
 	
 	public Monster(int row,int col) {
 		super(row,col);
 		Monster thiss = this;
-		/*bouncer = new ThreadRule<Boolean>() {
-			
-			@Override
-			public void onChange(Boolean curr, Boolean prev) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public Boolean get() {
-				// TODO Auto-generated method stub
-				Block.getBlock(oldRow, oldCol).setEntity(thiss);
-				return null;
-			}
-		};*/
 	}
 	
 	public boolean canMoveTo(int row,int col) throws UnmoveableException {
@@ -138,6 +122,7 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 	
 	
 	public double takePhysicalDamage(double damage) {
+		damage = Math.max(0, damage);
 		setHP(getHP()-damage);
 		
 		System.out.println(getHP());

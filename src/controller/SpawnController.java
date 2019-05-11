@@ -13,72 +13,11 @@ import gui.GameAreaInner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import rule.ThreadRule;
 
 public class SpawnController {
 	public static double spawnDelayConstant = 100000;
 	public static double spawnDelayStart = 5000;
 	public static int spawnRadius = 6;
-	
-	/*private ThreadRule<Boolean> spawnRule = new ThreadRule<Boolean>() {
-		
-		@Override
-		public void onChange(Boolean curr, Boolean prev) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public Boolean get() {
-			// TODO Auto-generated method stub
-			spawn();
-			try {
-				Thread.sleep(spawnDelay.get());
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				return null;
-			}
-			return null;
-		}
-	};
-	private ThreadRule<Long> spawnDelay = new ThreadRule<Long>() {
-		
-		@Override
-		public void onChange(Long curr, Long prev) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public Long get() {
-			// TODO Auto-generated method stub
-			return Math.round(spawnDelayStart/Math.exp(TimeController.getCurrentTime()/spawnDelayConstant));
-		}
-	};
-	
-	private ThreadRule<Boolean> moveAI = new ThreadRule<Boolean>() {
-		
-		@Override
-		public void onChange(Boolean curr, Boolean prev) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public Boolean get() {
-			// TODO Auto-generated method stub
-			
-
-			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-	};*/
 	
 	void doMoveAI() {
 		ArrayList<EnemyMonster> enemies = Player.mainPlayer.getSurroundingEnemies();

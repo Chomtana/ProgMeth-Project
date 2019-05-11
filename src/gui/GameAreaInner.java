@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import application.Main;
 import controller.EventController;
-import effect.TestEffect;
 import entity.Player;
 import entity.monster.Zombie;
 import entity.ore.Coal;
@@ -97,7 +96,6 @@ public class GameAreaInner extends GridPane
 			}
 		});*/
 
-		new TestEffect(0, 0);
 
 		EventController.onLoad(new Runnable()
 		{

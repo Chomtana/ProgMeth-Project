@@ -39,7 +39,9 @@ public abstract class Ore extends Entity implements HasHP, HasArmor, CanTakePhys
 	@Override
 	public double takePhysicalDamage(double damage) {
 		// TODO Auto-generated method stub
+		
 		damage -= getArmor();
+		damage = Math.max(0, damage);
 		
 		setHP(getHP()-damage);
 		
@@ -55,7 +57,9 @@ public abstract class Ore extends Entity implements HasHP, HasArmor, CanTakePhys
 	@Override
 	public double takeBombDamage(double damage) {
 		// TODO Auto-generated method stub
+		
 		damage -= getArmor();
+		damage = Math.max(0, damage);
 		
 		setHP(getHP()-damage);
 		

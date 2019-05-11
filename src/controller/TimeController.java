@@ -1,6 +1,5 @@
 package controller;
 
-import rule.ThreadRule;
 
 public class TimeController {
 	public static long startingTime = System.currentTimeMillis();

@@ -63,7 +63,8 @@ public abstract class Entity {
 		            "-fx-background-image: url(" +
 		            		icon +
 		            "); " +
-		            "-fx-background-size: 100%, 100%;"
+		            "-fx-background-size: 100%, 100%;"+
+		            (this instanceof Effect ? "-fx-opacity: 0.6;" : "")
 		        );
 		} else {
 			block.setStyle("-fx-background: none;");

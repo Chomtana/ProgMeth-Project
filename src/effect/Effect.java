@@ -68,10 +68,6 @@ public abstract class Effect extends Entity {
 		this.effectBlock = effectBlock;
 	}
 	
-	public void render(Block block) {
-		block.testLabel.setText("EF");
-	}
-	
 	
 
 }

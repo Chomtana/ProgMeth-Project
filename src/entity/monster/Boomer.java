@@ -1,5 +1,6 @@
 package entity.monster;
 
+import controller.TimeController;
 import effect.FireEffect;
 import entity.CanTakePhysicalDamage;
 import entity.Direction;
@@ -73,7 +74,7 @@ public class Boomer extends EnemyMonster {
 										@Override
 										public void run() {
 											// TODO Auto-generated method stub
-											new FireEffect(ii,jj,bombDmg,thiss);
+											new FireEffect(ii,jj,bombDmg+TimeController.getCurrentTime()/15000,thiss);
 										}
 									});
 									
@@ -107,7 +108,7 @@ public class Boomer extends EnemyMonster {
 	@Override
 	public boolean canAttack(CanTakePhysicalDamage target) {
 		// TODO Auto-generated method stub
-		return super.canAttack(target);
+		return false;
 	}
 
 	@Override

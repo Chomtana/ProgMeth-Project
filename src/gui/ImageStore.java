@@ -20,6 +20,7 @@ public class ImageStore {
 	
 	public String bomb = ClassLoader.getSystemResource("img/bomb.png").toString();
 	public String fire = ClassLoader.getSystemResource("img/fire.png").toString();
+	public String attack = ClassLoader.getSystemResource("img/attack.png").toString();
 	
 	public ImageStore() {
 		
