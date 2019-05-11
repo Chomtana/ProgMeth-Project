@@ -34,8 +34,10 @@ public class SpawnController {
 				if (!(ee instanceof EnemyMonster)) continue;
 				EnemyMonster e = (EnemyMonster) ee;*/
 				
-				int rDist = Math.abs(Player.mainPlayer.getRow() - e.getRow());
-				int cDist = Math.abs(Player.mainPlayer.getCol() - e.getCol());
+				int rDist = Player.mainPlayer.distRowTo(e);
+				int cDist = Player.mainPlayer.distColTo(e);
+				int rDistRaw = Math.abs(Player.mainPlayer.getRow()-e.getRow());
+				int cDistRaw = Math.abs(Player.mainPlayer.getCol()-e.getCol());
 				int distance = rDist + cDist;
 				if (distance==0) return;
 				int rDir = 0;
@@ -44,8 +46,12 @@ public class SpawnController {
 				if (Player.mainPlayer.getRow() < e.getRow()) rDir = -1;
 				else if (Player.mainPlayer.getRow() > e.getRow()) rDir = 1;
 				
+				if (rDistRaw > rDist) rDir = -rDir;
+				
 				if (Player.mainPlayer.getCol() < e.getCol()) cDir = -1;
 				else if (Player.mainPlayer.getCol() > e.getCol()) cDir = 1;
+				
+				if (cDistRaw > cDist) cDir = -cDir;
 				
 				int rand = (new Random()).nextInt(distance);
 		

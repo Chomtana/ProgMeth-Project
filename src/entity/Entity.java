@@ -3,6 +3,7 @@ package entity;
 import controller.EventController;
 import effect.Effect;
 import gui.Block;
+import gui.GameAreaInner;
 import gui.ImageStore;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -78,11 +79,29 @@ public abstract class Entity {
 		return currCol;
 	}
 	public void setRow(int row) {
+		if (row >= GameAreaInner.NUM_ROW) {
+			row = row - GameAreaInner.NUM_ROW;
+		} else if (row < 0) {
+			row = row + GameAreaInner.NUM_ROW;
+		}
 		this.currRow = row;
 	}
 	
 	public void setCol(int col) {
+		if (col >= GameAreaInner.NUM_COL) {
+			col = col - GameAreaInner.NUM_COL;
+		} else if (col < 0) {
+			col = col + GameAreaInner.NUM_COL;
+		}
 		this.currCol = col;
+	}
+	
+	public int distRowTo(Entity target) {
+		return Math.min(Math.abs(getRow()-target.getRow()), Math.abs(Math.abs(getRow()-target.getRow())-GameAreaInner.NUM_ROW));
+	}
+	
+	public int distColTo(Entity target) {
+		return Math.min(Math.abs(getCol()-target.getCol()), Math.abs(Math.abs(getCol()-target.getCol())-GameAreaInner.NUM_COL));
 	}
 	
 	public boolean isAlive() {

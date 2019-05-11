@@ -1,7 +1,11 @@
 package effect;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+import application.Main;
 import entity.CanTakeBombDamage;
-import entity.CanTakePhysicalDamage;
 import entity.Entity;
 import entity.GiveEXPOnDead;
 import entity.HasLevel;
@@ -13,6 +17,24 @@ public class FireEffect extends AutokillEffect {
 	private double atkDamage;
 	private Entity attacker;
 	
+	public static synchronized void playSound() {
+	  new Thread(new Runnable() {
+	  // The wrapper thread is unnecessary, unless it blocks on the
+	  // Clip finishing; see comments.
+	    public void run() {
+	      try {
+	        Clip clip = AudioSystem.getClip();
+	        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+	          Main.class.getResourceAsStream("/sound/bomb.wav"));
+	        clip.open(inputStream);
+	        clip.start(); 
+	      } catch (Exception e) {
+	        System.err.println(e.getMessage());
+	      }
+	    }
+	  }).start();
+	}
+	
 	public FireEffect(Entity e, double atkDamage) {
 		this(e.getRow(), e.getCol(), atkDamage, e);
 		// TODO Auto-generated constructor stub
@@ -22,6 +44,7 @@ public class FireEffect extends AutokillEffect {
 		super(row, col,300);
 		this.attacker = attacker;
 		this.atkDamage = atkDamage;
+		playSound();
 		// TODO Auto-generated constructor stub
 	}
 

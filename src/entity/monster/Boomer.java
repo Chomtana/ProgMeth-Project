@@ -48,9 +48,9 @@ public class Boomer extends EnemyMonster {
 	public boolean moveTo(int row,int col) {
 		boolean res = super.moveTo(row, col);
 		Boomer thiss = this;
-		if (res) {
+		if (true) {
 			if (bombThrottle != null && bombThrottle.isAlive()) return res;
-			boolean inradius = Math.abs(Player.mainPlayer.getRow() - getRow()) <= bombRadius && Math.abs(Player.mainPlayer.getCol() - getCol()) <= bombRadius;
+			boolean inradius = Math.abs(Player.mainPlayer.distRowTo(this)) <= bombRadius && Math.abs(Player.mainPlayer.distColTo(this)) <= bombRadius;
 			if (inradius) {
 				bombThrottle = new Thread(new Runnable() {
 					
@@ -63,7 +63,7 @@ public class Boomer extends EnemyMonster {
 							// TODO Auto-generated catch block
 							//e.printStackTrace();
 						}
-						boolean stillinradius = Math.abs(Player.mainPlayer.getRow() - getRow()) <= bombRadius && Math.abs(Player.mainPlayer.getCol() - getCol()) <= bombRadius;
+						boolean stillinradius = Math.abs(Player.mainPlayer.distRowTo(thiss)) <= bombRadius && Math.abs(Player.mainPlayer.distColTo(thiss)) <= bombRadius;
 						if (stillinradius && thiss.isAlive()) {
 							for(int i = getRow()-bombRadius ; i<= getRow()+bombRadius ; i++) {
 								for (int j = getCol()-bombRadius ; j <= getCol()+bombRadius; j++) {

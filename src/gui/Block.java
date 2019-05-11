@@ -82,6 +82,17 @@ public class Block extends StackPane {
 	}
 	
 	public static Block getBlock(int row,int col) {
+		if (col >= GameAreaInner.NUM_COL) {
+			col = col - GameAreaInner.NUM_COL;
+		} else if (col < 0) {
+			col = col + GameAreaInner.NUM_COL;
+		}
+		
+		if (row >= GameAreaInner.NUM_ROW) {
+			row = row - GameAreaInner.NUM_ROW;
+		} else if (row < 0) {
+			row = row + GameAreaInner.NUM_ROW;
+		}
 		return Main.gameArea.getInner().getBlocks().get(row).get(col);
 	}
 	

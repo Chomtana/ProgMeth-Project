@@ -29,13 +29,12 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 	}
 	
 	public boolean canMoveTo(int row,int col) throws UnmoveableException {
-		if (row < 0 || row >= GameAreaInner.NUM_ROW || col < 0 || col >= GameAreaInner.NUM_COL) {
-			throw new MoveOutOfBoundException();
-		}
-		
 		if (Block.getBlock(row, col).hasEntity()) {
 			//System.out.println("sdasda");
 			throw new MoveCollideException(Block.getBlock(row, col).getEntity());
+		}
+		if (row < 0 || row >= GameAreaInner.NUM_ROW || col < 0 || col >= GameAreaInner.NUM_COL) {
+			throw new MoveOutOfBoundException();
 		}
 		
 		return true;

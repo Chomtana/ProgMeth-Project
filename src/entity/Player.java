@@ -265,7 +265,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 		
 		for(int i = sr-15;i<=sr+15;i++) {
 			for (int j = sc-15;j<=sc+15;j++) {
-				if (i<0 || j<0 || i>=GameAreaInner.NUM_ROW || j>=GameAreaInner.NUM_COL) continue;
+				//if (i<0 || j<0 || i>=GameAreaInner.NUM_ROW || j>=GameAreaInner.NUM_COL) continue;
 				Entity ee = Block.getBlock(i, j).getEntity();
 				if (!(ee instanceof EnemyMonster)) continue;
 				EnemyMonster e = (EnemyMonster) ee;
