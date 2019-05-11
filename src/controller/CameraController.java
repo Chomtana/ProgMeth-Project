@@ -72,8 +72,8 @@ public class CameraController
 		
 		double blocksinrow = area.getHeight()/Block.HEIGHT;
 		double blocksincol = area.getWidth()/Block.WIDTH;
-		int topleftrow = (int) Math.min(GameAreaInner.NUM_ROW - blocksinrow, Math.max(0, center.getRow() - Math.round((blocksinrow-1)/2)));
-		int topleftcol = (int) Math.min(GameAreaInner.NUM_COL - blocksincol, Math.max(0, center.getCol() - Math.round((blocksincol-1)/2)));
+		int topleftrow = (int) Math.min(GameAreaInner.NUM_ROW - blocksinrow, Math.max(-9999, center.getRow() - Math.round((blocksinrow-1)/2)));
+		int topleftcol = (int) Math.min(GameAreaInner.NUM_COL - blocksincol, Math.max(-9999, center.getCol() - Math.round((blocksincol-1)/2)));
 		
 		area.getInner().setPadding(new Insets(
 			Math.max(0, topleftrow*Block.HEIGHT),
@@ -88,7 +88,23 @@ public class CameraController
 			//System.out.println(topleftrow); System.out.println(topleftcol);
 			for(int i = 0;i<GameAreaInner.VIEW_ROW;i++) {
 				for(int j = 0;j<GameAreaInner.VIEW_COL;j++) {
-					BlockView.getBlockView(i, j).setBlock(Block.getBlock(i+topleftrow, j+topleftcol),i+topleftrow,j+topleftcol);
+					BlockView bv = BlockView.getBlockView(i, j);
+					int targetrow = i+topleftrow;
+					int targetcol = j+topleftcol;
+					
+					if (targetcol >= GameAreaInner.NUM_COL) {
+						targetcol = targetcol - GameAreaInner.NUM_COL;
+					} else if (targetcol < 0) {
+						targetcol = targetcol + GameAreaInner.NUM_COL;
+					}
+					
+					if (targetrow >= GameAreaInner.NUM_ROW) {
+						targetrow = targetrow - GameAreaInner.NUM_ROW;
+					} else if (targetrow < 0) {
+						targetrow = targetrow + GameAreaInner.NUM_ROW;
+					}
+					bv.setBlock(Block.getBlock(targetrow, targetcol),targetrow,targetcol);
+
 				}
 			}
 		}

@@ -152,6 +152,7 @@ public class EventController {
 			});
 			
 		}
+		//CameraController.getInstance().performSetCenter();
 		onLoadRunned = true;
 	}
 }

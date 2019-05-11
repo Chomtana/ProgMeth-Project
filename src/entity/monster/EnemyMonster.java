@@ -41,23 +41,23 @@ public abstract class EnemyMonster extends Monster {
 	}
 	
 	public void moveLeft() {
-		this.moveTo(getRow(), getCol()-1);
-		setFacing(Direction.LEFT);
+		if (this.moveTo(getRow(), getCol()-1))
+			setFacing(Direction.LEFT);
 	}
 	
 	public void moveRight() {
-		this.moveTo(getRow(), getCol()+1);
-		setFacing(Direction.RIGHT);
+		if (this.moveTo(getRow(), getCol()+1))
+			setFacing(Direction.RIGHT);
 	}
 	
 	public void moveUp() {
-		this.moveTo(getRow()-1, getCol());
-		setFacing(Direction.UP);
+		if (this.moveTo(getRow()-1, getCol()))
+			setFacing(Direction.UP);
 	}
 	
 	public void moveDown() {
-		this.moveTo(getRow()+1, getCol());
-		setFacing(Direction.DOWN);
+		if (this.moveTo(getRow()+1, getCol()))
+			setFacing(Direction.DOWN);
 	}
 	
 	@Override
@@ -82,6 +82,7 @@ public abstract class EnemyMonster extends Monster {
 
 	public void setFacing(Direction facing) {
 		this.facing = facing;
+		this.render(getBlock());
 	}
 
 }

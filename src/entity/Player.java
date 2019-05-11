@@ -12,8 +12,8 @@ import gui.GameAreaInner;
 
 public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalDamage, CanTakeBombDamage {
 	
-	public static int START_ROW = 0;
-	public static int START_COL = 0;
+	public static int START_ROW = 50;
+	public static int START_COL = 50;
 	
 	public static Player mainPlayer = new Player(START_ROW,START_COL);
 	private Direction facing = Direction.UP;
@@ -21,7 +21,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	
 	protected int moveDelay = 100;
 	
-	private double hp = 100;
+	private double hp = 10000;
 	private double armor = 0;
 	private double atkDamage = 5;
 	private double bombDamage = 10;
@@ -77,7 +77,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	}
 	
 	public void bomb() {
-		new BombEffect(getRow(),getCol(),bombDamage,bombRadius);
+		new BombEffect(getRow(),getCol(),bombDamage,bombRadius,this);
 	}
 
 	@Override
@@ -159,6 +159,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 
 	public void setFacing(Direction facing) {
 		this.facing = facing;
+		this.render(getBlock());
 	}
 	
 	public ArrayList<EnemyMonster> getSurroundingEnemies() {
@@ -224,8 +225,10 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	@Override
 	public double takePhysicalDamage(double damage) {
 		// TODO Auto-generated method stub
-		damage -= armor;
-		hp -= damage;
+		damage -= getArmor();
+		setHP(getHP()-damage);
+		
+		System.out.println(getHP());
 		
 		if (!isAlive()) {
 			kill();
@@ -238,13 +241,23 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	//Bomb ignore player armor
 	public double takeBombDamage(double damage) {
 		// TODO Auto-generated method stub
-		hp -= damage;
+		setHP(getHP()-damage);
+		
+		System.out.println(getHP());
 		
 		if (!isAlive()) {
+			System.out.println("player dead");
 			kill();
 		}
 		
 		return damage;
 	}
 
+	public double getHP() {
+		return hp;
+	}
+	public void setHP(double hp) {
+		this.hp = hp;
+	}
+	
 }

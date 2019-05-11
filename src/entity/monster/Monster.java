@@ -60,7 +60,19 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 	public boolean moveTo(int row,int col) throws UnmoveableException {
 		//throw exception
 		//System.out.println(row+" "+col+" "+canMoveTo(row,col));
-		if (!canMoveTo(row,col)) {
+		boolean canMove;
+		try {
+			canMove = canMoveTo(row,col);
+		} catch (MoveOutOfBoundException e) {
+			if (row<0) row = GameAreaInner.NUM_ROW-1;
+			if (row>=GameAreaInner.NUM_ROW) row = 0;
+			if (col<0) col = GameAreaInner.NUM_COL-1;
+			if (col>=GameAreaInner.NUM_COL) col = 0;
+			canMove = true;
+		} catch (UnmoveableException e) {
+			throw e;
+		}
+		if (!canMove) {
 			throw new UnmoveableException("Cannot move to ("+row+","+col+")");
 		}
 		
@@ -102,6 +114,8 @@ public abstract class Monster extends Entity implements Moveable, Attackable, Ha
 				}
 			});
 			moveThrottle.start();
+		} else {
+			return false;
 		}
 		return true;
 	}

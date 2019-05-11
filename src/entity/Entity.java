@@ -99,7 +99,11 @@ public abstract class Entity {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					Block.getBlock(getRow(), getCol()).removeEffect((Effect) thiss); 
+					try {
+						Block.getBlock(getRow(), getCol()).removeEffect((Effect) thiss); 
+					} catch (NullPointerException e) {
+						
+					}
 				}
 			});
 			

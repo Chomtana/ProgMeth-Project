@@ -21,11 +21,15 @@ public abstract class Effect extends Entity {
 				// TODO Auto-generated method stub
 				//System.out.println(getRow());
 				//System.out.println(getCol());
-				if (Block.getBlock(row, col).hasEntity()) {
-					onCollideWith(Block.getBlock(row, col).getEntity());
+				try { 
+					if (Block.getBlock(row, col).hasEntity()) {
+						onCollideWith(Block.getBlock(row, col).getEntity());
+					}
+					
+					Block.getBlock(getRow(), getCol()).addEffect(thiss);
+				} catch (NullPointerException e) {
+					
 				}
-				
-				Block.getBlock(getRow(), getCol()).addEffect(thiss);
 			}
 		});
 	}

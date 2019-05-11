@@ -5,6 +5,7 @@ import java.util.Random;
 import controller.CameraController;
 import controller.EventController;
 import controller.SpawnController;
+import entity.Player;
 import gui.GameArea;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -178,6 +179,38 @@ public class Main extends Application {
 				cameraController = new CameraController();
 				//cameraController.performSetCenter();
 				CameraController.registerInstance(cameraController);
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						try {
+							Thread.sleep(100);
+							Platform.runLater(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									cameraController.performSetCenter();
+								}
+							});
+							Thread.sleep(1000);
+							Platform.runLater(new Runnable() {
+								
+								@Override
+								public void run() {
+									Player.mainPlayer.moveLeft();
+								}
+							});
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							//e.printStackTrace();
+						}
+
+						
+					}
+				}).start();
+				
 			}
 		});
     	

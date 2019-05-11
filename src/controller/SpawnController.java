@@ -111,9 +111,19 @@ public class SpawnController {
 				int rand = (new Random()).nextInt(distance);
 		
 				if (rand < rDist) {
-					e.moveTo(e.getRow()+rDir,e.getCol());
+					//e.moveTo(e.getRow()+rDir,e.getCol());
+					if (rDir < 0) {
+						e.moveUp();
+					} else {
+						e.moveDown();
+					}
 				} else {
-					e.moveTo(e.getRow(),e.getCol()+cDir);
+					//e.moveTo(e.getRow(),e.getCol()+cDir);
+					if (cDir < 0) {
+						e.moveLeft();
+					} else {
+						e.moveRight();
+					}
 				}
 				
 				/*return;
@@ -122,7 +132,7 @@ public class SpawnController {
 	}
 	
 	public SpawnController() {
-		Timeline moveAI = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+		Timeline moveAI = new Timeline(new KeyFrame(Duration.millis(200), e -> {
 			doMoveAI();
 		}));
 		moveAI.setCycleCount(Timeline.INDEFINITE);
@@ -141,6 +151,11 @@ public class SpawnController {
 		int sc = p.getCol();
 		Random random = Main.random;
 		System.out.println("Spawn");
+		
+		ArrayList<EnemyMonster> enemies = Player.mainPlayer.getSurroundingEnemies();
+		if (enemies.size()>=5) {
+			return;
+		}
 		
 		int loopcount = 100;
 		

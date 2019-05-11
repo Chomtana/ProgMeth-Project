@@ -8,6 +8,16 @@ public class ImageStore {
 	public String ironBlock = ClassLoader.getSystemResource("img/ironblock.png").toString();
 	public String diamondBlock = ClassLoader.getSystemResource("img/diamondblock.png").toString();
 	
+	public String boomerU = ClassLoader.getSystemResource("img/boomerU.png").toString();
+	public String boomerR = ClassLoader.getSystemResource("img/boomerR.png").toString();
+	public String boomerD = ClassLoader.getSystemResource("img/boomerD.png").toString();
+	public String boomerL = ClassLoader.getSystemResource("img/boomerL.png").toString();
+	
+	public String zombieU = ClassLoader.getSystemResource("img/zombieU.png").toString();
+	public String zombieR = ClassLoader.getSystemResource("img/zombieR.png").toString();
+	public String zombieD = ClassLoader.getSystemResource("img/zombieD.png").toString();
+	public String zombieL = ClassLoader.getSystemResource("img/zombieL.png").toString();
+	
 	public ImageStore() {
 		
 	}

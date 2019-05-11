@@ -47,7 +47,7 @@ public class GameAreaInner extends GridPane
 			for (int j = 0; j < NUM_ROW; j++)
 			{
 				Block block = new Block(j, i);
-				if (i == 0 && j == 0)
+				if (i == 50 && j == 50)
 				{
 
 					block.setEntity(Player.mainPlayer);
@@ -86,7 +86,7 @@ public class GameAreaInner extends GridPane
 		});
 		
 
-		Platform.runLater(new Runnable()
+		/*Platform.runLater(new Runnable()
 		{
 
 			@Override
@@ -95,7 +95,7 @@ public class GameAreaInner extends GridPane
 				Player.mainPlayer.moveDown();
 
 			}
-		});
+		});*/
 
 		new TestEffect(0, 0);
 
@@ -239,6 +239,8 @@ public class GameAreaInner extends GridPane
 				{
 					for (int j = 0; j < NUM_COL; j++)
 					{
+						if (i==Player.START_ROW && j==Player.START_COL) continue;
+						if (i==Player.START_ROW && j==Player.START_COL-1) continue;
 						if (isDiamondOre[i][j])
 							new Diamond(i, j);
 						else if (isIronOre[i][j])

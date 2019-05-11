@@ -1,7 +1,9 @@
 package entity.monster;
 
 import entity.CanTakePhysicalDamage;
+import entity.Direction;
 import gui.Block;
+import gui.ImageStore;
 
 public class Zombie extends EnemyMonster {
 	
@@ -46,11 +48,11 @@ public class Zombie extends EnemyMonster {
 	@Override
 	public String getIcon() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void render(Block b) {
-		b.testLabel.setText("Z");
+		if (getFacing() == Direction.UP) return ImageStore.getInstance().zombieU;
+		else if (getFacing() == Direction.DOWN) return ImageStore.getInstance().zombieD;
+		else if (getFacing() == Direction.LEFT) return ImageStore.getInstance().zombieL;
+		else if (getFacing() == Direction.RIGHT) return ImageStore.getInstance().zombieR;
+		return ImageStore.getInstance().zombieU;
 	}
 
 }

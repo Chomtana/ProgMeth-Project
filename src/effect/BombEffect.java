@@ -9,14 +9,16 @@ public class BombEffect extends AutokillEffect {
 	private double atkDamage;
 	private Thread bombStarter;
 	private int radius;
+	private Entity attacker;
 	
 	public BombEffect(Entity e, double atkDamage, int radius) {
-		this(e.getRow(), e.getCol(), atkDamage, radius);
+		this(e.getRow(), e.getCol(), atkDamage, radius, e);
 		// TODO Auto-generated constructor stub
 	}
 
-	public BombEffect(int row, int col, double atkDamage,int radius) {
+	public BombEffect(int row, int col, double atkDamage,int radius, Entity attacker) {
 		super(row, col,2000);
+		this.attacker = attacker;
 		this.atkDamage = atkDamage;
 		this.radius = radius;
 		// TODO Auto-generated constructor stub
@@ -28,25 +30,25 @@ public class BombEffect extends AutokillEffect {
 				try {
 					Thread.sleep(2000);
 					//System.out.println(radius);
-					new FireEffect(row, col, atkDamage);
+					new FireEffect(row, col, atkDamage, attacker);
 					for(int i = row-1;i>=row-radius;i--) {
 						if (i>=0) {
-							new FireEffect(i, col, atkDamage);
+							new FireEffect(i, col, atkDamage, attacker);
 						}
 					}
 					for(int i = row+1;i<=row+radius;i++) {
 						if (i<GameAreaInner.NUM_ROW) {
-							new FireEffect(i, col, atkDamage);
+							new FireEffect(i, col, atkDamage, attacker);
 						}
 					}
 					for(int i = col-1;i>=col-radius;i--) {
 						if (i>=0) {
-							new FireEffect(row, i, atkDamage);
+							new FireEffect(row, i, atkDamage, attacker);
 						}
 					}
 					for(int i = col+1;i<=col+radius;i++) {
 						if (i<GameAreaInner.NUM_COL) {
-							new FireEffect(row, i, atkDamage);
+							new FireEffect(row, i, atkDamage, attacker);
 						}
 					}
 				} catch (InterruptedException e) {
@@ -87,6 +89,14 @@ public class BombEffect extends AutokillEffect {
 
 	public void setRadius(int radius) {
 		this.radius = radius;
+	}
+
+	public Entity getAttacker() {
+		return attacker;
+	}
+
+	public void setAttacker(Entity attacker) {
+		this.attacker = attacker;
 	}
 	
 	
