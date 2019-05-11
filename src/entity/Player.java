@@ -25,7 +25,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	private double armor = 0;
 	private double atkDamage = 5;
 	private double bombDamage = 10;
-	private int bombRadius = 5;
+	private int bombRadius = 3;
 	
 	public Player(int row,int col) {
 		super(row,col);

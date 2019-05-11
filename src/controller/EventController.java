@@ -113,7 +113,7 @@ public class EventController {
 	            Player.mainPlayer.attack();
 	            //System.out.println("dsadsasad");
 	        } else {
-	        	
+	        	Player.mainPlayer.bomb();
 	        }
 		});
 	}

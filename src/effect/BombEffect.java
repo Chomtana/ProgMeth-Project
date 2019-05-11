@@ -27,6 +27,7 @@ public class BombEffect extends AutokillEffect {
 				// TODO Auto-generated method stub
 				try {
 					Thread.sleep(2000);
+					//System.out.println(radius);
 					new FireEffect(row, col, atkDamage);
 					for(int i = row-1;i>=row-radius;i--) {
 						if (i>=0) {
@@ -55,6 +56,7 @@ public class BombEffect extends AutokillEffect {
 				
 			}
 		});
+		bombStarter.start();
 	}
 
 	@Override
