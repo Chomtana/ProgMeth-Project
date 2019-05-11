@@ -66,8 +66,8 @@ public class CameraController
 		double hval = ((xpos-(double)area.getWidthReal()/2 + 15)/(double)totalx);
 		double vval = ((ypos-(double)area.getHeightReal()/2 + 15)/(double)totaly);
 		//if(hval>25) hval = 1.0164883162262504;
-		area.setHvalue( hval );
-		area.setVvalue( vval );
+		//area.setHvalue( hval );
+		//area.setVvalue( vval );
 		//System.out.println(xpos);
 		//System.out.println(hval*totalx);
 		
@@ -77,12 +77,12 @@ public class CameraController
 		int topleftrow = (int) Math.min(9999, Math.max(-9999, center.getRow() - Math.round((blocksinrow-1)/2)));
 		int topleftcol = (int) Math.min(9999, Math.max(-9999, center.getCol() - Math.round((blocksincol-1)/2)));
 		
-		area.getInner().setPadding(new Insets(
+		/*area.getInner().setPadding(new Insets(
 			Math.max(0, topleftrow*Block.HEIGHT),
 			0,//totalx - Math.max(0, topleftcol*Block.WIDTH), 
 			0,//totaly - Math.max(0, topleftrow*Block.HEIGHT), 
 			Math.max(0, topleftcol*Block.WIDTH)
-		));
+		));*/
 
 		//System.out.println(topleftcol);
 		//System.out.println(GameAreaInner.NUM_COL - blocksincol);
