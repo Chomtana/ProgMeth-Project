@@ -44,5 +44,11 @@ public class Coal extends Ore
 		// TODO Auto-generated method stub
 		this.armor = armor;
 	}
+	
+	@Override
+	public String getItem() {
+		// TODO Auto-generated method stub
+		return "Coal";
+	}
 
 }

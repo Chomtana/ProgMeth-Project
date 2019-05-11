@@ -2,19 +2,24 @@ package effect;
 
 import entity.CanTakePhysicalDamage;
 import entity.Entity;
+import entity.HasInventory;
+import entity.ore.Ore;
+import entity.ore.Pickable;
 
 public class AttackEffect extends AutokillEffect {
 	
 	private double atkDamage;
+	private Entity attacker;
 	
-	public AttackEffect(Entity e, double atkDamage) {
-		this(e.getRow(), e.getCol(), atkDamage);
+	public AttackEffect(Entity target, double atkDamage, Entity attacker) {
+		this(target.getRow(), target.getCol(), atkDamage, attacker);
 		// TODO Auto-generated constructor stub
 	}
 
-	public AttackEffect(int row, int col, double atkDamage) {
+	public AttackEffect(int row, int col, double atkDamage, Entity attacker) {
 		super(row, col,200);
 		this.atkDamage = atkDamage;
+		this.attacker = attacker;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -23,6 +28,11 @@ public class AttackEffect extends AutokillEffect {
 		// TODO Auto-generated method stub
 		if (target instanceof CanTakePhysicalDamage) {
 			((CanTakePhysicalDamage) target).takePhysicalDamage(getAtkDamage());
+			if (target instanceof Pickable) {
+				Pickable ore = (Pickable) target;
+				System.out.println("Pickable");
+				ore.pick(attacker);
+			}
 		}
 	}
 
@@ -38,6 +48,14 @@ public class AttackEffect extends AutokillEffect {
 
 	public void setAtkDamage(double atkDamage) {
 		this.atkDamage = atkDamage;
+	}
+
+	public Entity getAttacker() {
+		return attacker;
+	}
+
+	public void setAttacker(Entity attacker) {
+		this.attacker = attacker;
 	}
 	
 	

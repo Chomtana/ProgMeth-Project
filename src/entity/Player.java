@@ -9,8 +9,9 @@ import entity.monster.EnemyMonster;
 import entity.monster.Monster;
 import gui.Block;
 import gui.GameAreaInner;
+import item.Inventory;
 
-public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalDamage, CanTakeBombDamage {
+public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalDamage, CanTakeBombDamage, HasInventory {
 	
 	public static int START_ROW = 50;
 	public static int START_COL = 50;
@@ -26,6 +27,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	private double atkDamage = 5;
 	private double bombDamage = 10;
 	private int bombRadius = 3;
+	public Inventory inventory = new Inventory();
 	
 	public Player(int row,int col) {
 		super(row,col);
@@ -37,7 +39,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 		if (!canAttack(target)) return;
 		
 		if (target instanceof Entity) {
-			new AttackEffect((Entity) target, atkDamage);
+			new AttackEffect((Entity) target, atkDamage, this);
 		} else {
 			target.takePhysicalDamage(atkDamage);
 		}
@@ -258,6 +260,12 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	}
 	public void setHP(double hp) {
 		this.hp = hp;
+	}
+
+	@Override
+	public Inventory getInventory() {
+		// TODO Auto-generated method stub
+		return inventory;
 	}
 	
 }

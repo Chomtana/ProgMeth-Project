@@ -84,7 +84,7 @@ public abstract class Entity {
 		this.currCol = col;
 	}
 	
-	public boolean getIsAlive() {
+	public boolean isAlive() {
 		return isAlive;
 	}
 	

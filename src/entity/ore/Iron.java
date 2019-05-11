@@ -45,4 +45,10 @@ public class Iron extends Ore
 		this.armor = armor;
 	}
 
+	@Override
+	public String getItem() {
+		// TODO Auto-generated method stub
+		return "Iron";
+	}
+
 }
