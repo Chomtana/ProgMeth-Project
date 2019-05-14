@@ -23,9 +23,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
  
 public class Main extends Application {
-	TextField Topic;
-	DatePicker Date;
-	TextArea Description;
 	
 	public static GameArea gameArea;
 	public static StackPane eventPane;
@@ -62,8 +59,6 @@ public class Main extends Application {
     	
     	root = new StackPane();
     	Scene scene = new Scene(root,900,600);
-    	
-    	Description = new TextArea();
     	
     	root.setPadding(new Insets(0,0,0,0));
     	root.setStyle("-fx-background-color: lemonchiffon;");

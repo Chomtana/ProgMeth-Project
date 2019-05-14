@@ -15,11 +15,10 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class SpawnController {
-	public static double spawnDelayConstant = 100000;
 	public static double spawnDelayStart = 5000;
 	public static int spawnRadius = 6;
 	
-	void doMoveAI() {
+	private void doMoveAI() {
 		ArrayList<EnemyMonster> enemies = Player.mainPlayer.getSurroundingEnemies();
 		if (enemies.size() <= 0) return;
 		EnemyMonster e = enemies.get((new Random()).nextInt(enemies.size()));

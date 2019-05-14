@@ -247,7 +247,10 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	
 	@Override
 	public int getMoveDelay() {
-		return moveDelay;
+		if (getInventory().getBootLevel() == 0) return 400;
+		if (getInventory().getBootLevel() == 1) return 350;
+		if (getInventory().getBootLevel() == 2) return 300;
+		return 500;
 	}
 
 	public Direction getFacing() {
@@ -282,7 +285,7 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	@Override
 	public double getArmor() {
 		// TODO Auto-generated method stub
-		return armor + getLevel()-1 + getInventory().getArmorLevel()*exptable[getInventory().getArmorLevel()+2] ;
+		return armor + getLevel()-1 + getInventory().getArmorLevel()*exptable[getInventory().getArmorLevel()+2] + getInventory().getHelmetLevel()*exptable[getInventory().getHelmetLevel()] + getInventory().getBootLevel() + getInventory().getPantLevel() ;
 	}
 
 	@Override
@@ -357,7 +360,9 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	}
 	public void setHP(double hp) {
 		this.hp = hp;
-		Main.controlPanel.update();
+		try {
+			Main.controlPanel.update();
+		} catch (Exception e) {}
 	}
 
 	@Override
