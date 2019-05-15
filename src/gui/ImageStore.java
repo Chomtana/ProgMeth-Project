@@ -44,6 +44,8 @@ public class ImageStore {
 	public String ironArmor = ClassLoader.getSystemResource("img/IronArmor.png").toString();
 	public String diamondArmor = ClassLoader.getSystemResource("img/DiamondArmor.png").toString();
 	
+	public String startbg = ClassLoader.getSystemResource("img/startbg.png").toString();
+	
 	public ImageStore() {
 		
 	}

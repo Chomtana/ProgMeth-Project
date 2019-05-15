@@ -8,17 +8,16 @@ import controller.SpawnController;
 import entity.Player;
 import gui.ControlPanel;
 import gui.GameArea;
+import gui.ImageStore;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
  
@@ -72,6 +71,52 @@ public class Main extends Application {
     	
     	st1.getChildren().add(gameArea = new GameArea());
     	st1.getChildren().add(eventPane);
+    	
+    	final StackPane startPane = new StackPane();
+    	startPane.setStyle(
+	            "-fx-background-image: url(" +
+	            		ImageStore.getInstance().startbg +
+	            "); " +
+	            "-fx-background-size: 100%, 100%;"
+	        );
+    	
+    	Button startBtn = new Button("Start Game Now !!!");
+    	startBtn.setStyle("-fx-background-color: greenyellow");
+    	startBtn.setPadding(new Insets(20));
+    	startBtn.setFont(new Font(24));
+    	
+    	startPane.getChildren().add(startBtn);
+    	
+    	startBtn.setOnAction(e->{
+    		
+    		startBtn.setText("Loading ...");
+        	
+        	new Thread(new Runnable() {
+    			
+    			@Override
+    			public void run() {
+    				// TODO Auto-generated method stub
+    				try {
+    					Thread.sleep(1000);
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    				Platform.runLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							root.getChildren().remove(startPane);
+						}
+					});
+    				EventController.performOnLoad();
+    			}
+    		}).start();
+    	});
+    	
+    	
+    	root.getChildren().add(startPane);
     	
     	
     	
@@ -142,21 +187,7 @@ public class Main extends Application {
 				
 			}
 		});
-    	
-    	new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				EventController.performOnLoad();
-			}
-		}).start();
+
     	
     	
     	

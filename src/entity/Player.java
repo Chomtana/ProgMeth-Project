@@ -23,8 +23,6 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 	private Direction facing = Direction.UP;
 	
 	
-	protected int moveDelay = 100;
-	
 	private double hp = 100;
 	private double maxhp = 100;
 	private double regenhp = 0;
