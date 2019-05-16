@@ -1,10 +1,25 @@
 package application;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import controller.CameraController;
 import controller.EventController;
 import controller.SpawnController;
+import controller.TimeController;
 import entity.Player;
 import gui.ControlPanel;
 import gui.GameArea;
@@ -45,13 +60,83 @@ public class Main extends Application {
 	
 	public static void endGame() {
 		Platform.exit();
+		JFrame frame = new JFrame("Ja Boom Mine By InfinityBug");
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		frame.setSize(900, 600);
+		panel.setSize(900, 600);
+		frame.setLocation(300,200);
+		panel.setBorder(new EmptyBorder(200, 200, 200, 200));
+		panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.setAlignmentY(Component.CENTER_ALIGNMENT);
 		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBackground(Color.RED);
+		panel.setBackground(Color.RED);
+		
+		JLabel gameOverLabel = new JLabel("Game Over !");
+		gameOverLabel.setForeground(Color.WHITE);
+		gameOverLabel.setFont(new java.awt.Font(gameOverLabel.getName(), java.awt.Font.PLAIN, 24));
+		gameOverLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		JLabel youHaveSurvivedFor = new JLabel("You have survived for "+TimeController.getCurrentTime()/1000+" seconds");
+		youHaveSurvivedFor.setForeground(Color.WHITE);
+		youHaveSurvivedFor.setFont(new java.awt.Font(youHaveSurvivedFor.getName(), java.awt.Font.PLAIN, 24));
+		youHaveSurvivedFor.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		JButton exitBtn = new JButton("Exit game");
+		exitBtn.setBackground(Color.LIGHT_GRAY);
+		exitBtn.setBorder(new EmptyBorder(20, 20, 20, 20));
+		exitBtn.setFont(new java.awt.Font(exitBtn.getName(), java.awt.Font.PLAIN, 24));
+		exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		exitBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+		});
+		
+		panel.add(gameOverLabel);
+		panel.add(youHaveSurvivedFor);
+		panel.add(exitBtn);
+		
+		frame.getContentPane().add(panel);
+		frame.pack();
+		
+		frame.setVisible(true);
+	}
+	
+	public static synchronized void playBgSound() {
+	  new Thread(new Runnable() {
+	  // The wrapper thread is unnecessary, unless it blocks on the
+	  // Clip finishing; see comments.
+	    public void run() {
+	      try {
+	        Clip clip = AudioSystem.getClip();
+	        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+	        		ClassLoader.getSystemResource("sound/bg.wav"));
+	        clip.open(inputStream);
+	        clip.start(); 
+	        clip.loop(Clip.LOOP_CONTINUOUSLY);
+	        while(clip.isRunning())
+	        {
+	          Thread.sleep(100);
+	        }
+	        Thread.sleep(100);
+	      } catch (Exception e) {
+	        System.err.println(e.getMessage());
+	      }
+	    }
+	  }).start();
 	}
     
     
     
     @Override
     public void start(Stage primaryStage) {
+    	playBgSound();
     	instance = this;
     	primaryStage.setTitle("Ja Boom Mine By InfinityBug");
     	primaryStage.setResizable(false);

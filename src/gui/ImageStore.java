@@ -20,6 +20,11 @@ public class ImageStore {
 	public String zombieD = ClassLoader.getSystemResource("img/zombieD.png").toString();
 	public String zombieL = ClassLoader.getSystemResource("img/zombieL.png").toString();
 	
+	public String playerU = ClassLoader.getSystemResource("img/PlayerU.png").toString();
+	public String playerR = ClassLoader.getSystemResource("img/PlayerR.png").toString();
+	public String playerD = ClassLoader.getSystemResource("img/PlayerD.png").toString();
+	public String playerL = ClassLoader.getSystemResource("img/PlayerL.png").toString();
+	
 	public String bomb = ClassLoader.getSystemResource("img/bomb.png").toString();
 	public String fire = ClassLoader.getSystemResource("img/fire.png").toString();
 	public String attack = ClassLoader.getSystemResource("img/attack.png").toString();

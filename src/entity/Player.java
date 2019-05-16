@@ -8,6 +8,7 @@ import effect.BombEffect;
 import entity.monster.EnemyMonster;
 import entity.monster.Monster;
 import gui.Block;
+import gui.ImageStore;
 import item.Crafter;
 import item.Inventory;
 import javafx.animation.KeyFrame;
@@ -171,8 +172,26 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 		}
 	}
 	
+	private Thread bombThrottle = null;
+	
 	public void bomb() {
-		new BombEffect(getRow(),getCol(),bombDamage,bombRadius,this);
+		if (bombThrottle == null || !bombThrottle.isAlive()) {
+			new BombEffect(getRow(),getCol(),bombDamage,bombRadius,this);
+			bombThrottle = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+			bombThrottle.start();
+		}
 	}
 
 	@Override
@@ -183,12 +202,11 @@ public class Player extends Monster implements HasHP, HasArmor, CanTakePhysicalD
 
 	@Override
 	public String getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void render(Block b) {
-		b.testLabel.setText("P");
+		if (getFacing() == Direction.UP) return ImageStore.getInstance().playerU;
+		else if (getFacing() == Direction.DOWN) return ImageStore.getInstance().playerD;
+		else if (getFacing() == Direction.LEFT) return ImageStore.getInstance().playerL;
+		else if (getFacing() == Direction.RIGHT) return ImageStore.getInstance().playerR;
+		return ImageStore.getInstance().playerU;
 	}
 	
 	public void handleUnmoveableException(UnmoveableException e) {

@@ -27,7 +27,7 @@ public class AttackEffect extends AutokillEffect {
 	      try {
 	        Clip clip = AudioSystem.getClip();
 	        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-	          Main.class.getResourceAsStream("/sound/attack.wav"));
+	          ClassLoader.getSystemResource("sound/attack.wav"));
 	        clip.open(inputStream);
 	        clip.start(); 
 	      } catch (Exception e) {

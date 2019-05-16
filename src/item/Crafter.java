@@ -64,21 +64,21 @@ public class Crafter implements HasInventory {
 	}
 	
 	public boolean has(String name,Integer amount) {
-		if (!items.containsKey(name)) return false;
+		if (!items.containsKey(name)) return amount==0;
 		return items.get(name) == amount;
 	}
 	
 	public String getCraftTarget() {
-		if (getInventory().getSwordLevel() == 0 && has("Iron", 3)) return "IronSword";
-		if (getInventory().getSwordLevel() == 1 && has("Iron", 2) && has("Diamond", 3)) return "DiamondSword";
-		if (getInventory().getArmorLevel() == 0 && has("Iron", 3) && has("Coal",1)) return "IronArmor";
-		if (getInventory().getArmorLevel() == 1 && has("Diamond", 3) && has("Coal",2)) return "DiamondArmor";
-		if (getInventory().getHelmetLevel() == 0 && has("Iron", 2) && has("Coal",2)) return "IronHelmet";
-		if (getInventory().getHelmetLevel() == 1 && has("Diamond", 2) && has("Coal",4)) return "DiamondHelmet";
-		if (getInventory().getPantLevel() == 0 && has("Iron", 2) && has("Coal",3)) return "IronPant";
-		if (getInventory().getPantLevel() == 1 && has("Diamond", 2) && has("Coal",6)) return "DiamondPant";
-		if (getInventory().getBootLevel() == 0 && has("Iron", 2) && has("Coal",4)) return "IronBoot";
-		if (getInventory().getBootLevel() == 1 && has("Diamond", 2) && has("Coal",8)) return "DiamondBoot";
+		if (getInventory().getSwordLevel() == 0 && has("Iron", 3) && has("Coal", 0) && has("Diamond", 0)) return "IronSword";
+		if (getInventory().getSwordLevel() == 1 && has("Iron", 2) && has("Diamond", 3) && has("Coal", 0)) return "DiamondSword";
+		if (getInventory().getArmorLevel() == 0 && has("Iron", 3) && has("Coal",1) && has("Diamond", 0)) return "IronArmor";
+		if (getInventory().getArmorLevel() == 1 && has("Diamond", 3) && has("Coal",2) && has("Iron",0)) return "DiamondArmor";
+		if (getInventory().getHelmetLevel() == 0 && has("Iron", 2) && has("Coal",2) && has("Diamond",0)) return "IronHelmet";
+		if (getInventory().getHelmetLevel() == 1 && has("Diamond", 2) && has("Coal",4) && has("Iron",0)) return "DiamondHelmet";
+		if (getInventory().getPantLevel() == 0 && has("Iron", 2) && has("Coal",3) && has("Diamond",0)) return "IronPant";
+		if (getInventory().getPantLevel() == 1 && has("Diamond", 2) && has("Coal",6) && has("Iron",0)) return "DiamondPant";
+		if (getInventory().getBootLevel() == 0 && has("Iron", 2) && has("Coal",4) && has("Diamond",0)) return "IronBoot";
+		if (getInventory().getBootLevel() == 1 && has("Diamond", 2) && has("Coal",8) && has("Iron",0)) return "DiamondBoot";
 		return "";
 	}
 	

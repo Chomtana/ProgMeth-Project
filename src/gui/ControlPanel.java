@@ -33,7 +33,7 @@ public class ControlPanel extends VBox
 				{
 					Clip clip = AudioSystem.getClip();
 					AudioInputStream inputStream = AudioSystem
-							.getAudioInputStream(Main.class.getResourceAsStream("/sound/wrong.wav"));
+							.getAudioInputStream(ClassLoader.getSystemResource("/sound/wrong.wav"));
 					clip.open(inputStream);
 					clip.start();
 				}

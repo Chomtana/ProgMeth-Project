@@ -25,7 +25,7 @@ public class FireEffect extends AutokillEffect {
 	      try {
 	        Clip clip = AudioSystem.getClip();
 	        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-	          Main.class.getResourceAsStream("/sound/bomb.wav"));
+	        		ClassLoader.getSystemResource("sound/bomb.wav"));
 	        clip.open(inputStream);
 	        clip.start(); 
 	      } catch (Exception e) {
