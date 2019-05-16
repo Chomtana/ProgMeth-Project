@@ -15,7 +15,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class SpawnController {
-	public static double spawnDelayStart = 5000;
+	public static double spawnDelayStart = 10000;
 	public static int spawnRadius = 6;
 	
 	private void doMoveAI() {
